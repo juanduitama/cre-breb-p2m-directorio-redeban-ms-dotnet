@@ -36,7 +36,8 @@ namespace domain.constants
         INVALID_FLOW_SERVICES,
         INVALID_VAULT_NAME,
         INVALID_MERCHANT_ID,
-        ERROR_REDEBAN_CONNECTION
+        ERROR_REDEBAN_CONNECTION,
+        INVALID_KEY_ID
 
     }
 
@@ -73,6 +74,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_FLOW_SERVICES => "400",
                 ResponseServiceEnum.INVALID_VAULT_NAME => "400",
                 ResponseServiceEnum.INVALID_MERCHANT_ID => "400",
+                ResponseServiceEnum.INVALID_KEY_ID => "400",
                 ResponseServiceEnum.ERROR_REDEBAN_CONNECTION => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
@@ -107,6 +109,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_FLOW_SERVICES => "[vaultInsc.flowService] no cumple con los valores de flujo de servicios permitidos.",
                 ResponseServiceEnum.INVALID_VAULT_NAME => "[vaultInsc.vaultName] no cumple con los valores del vault name.",
                 ResponseServiceEnum.ERROR_REDEBAN_CONNECTION => "No se pudo crear la llave en la cámara de redeban",
+                ResponseServiceEnum.INVALID_KEY_ID => "[key.keyId] la llave no cumple los valores permitidos o el formato requerido.",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -139,6 +142,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_FLOW_SERVICES => 400,
                 ResponseServiceEnum.INVALID_VAULT_NAME => 400,
                 ResponseServiceEnum.INVALID_MERCHANT_ID => 400,
+                ResponseServiceEnum.INVALID_KEY_ID => 400,
                 ResponseServiceEnum.ERROR_REDEBAN_CONNECTION => 500,
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };

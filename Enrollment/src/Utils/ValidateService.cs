@@ -126,10 +126,53 @@ namespace application.Services
         public bool validateKeyType(string keyType, string value){
             switch (keyType)
             {
+                case ValidationEnums.KEY_TYPE_IDENT:
+                    if (!validateRegex(value, ValidationEnums.KEY_ID_IDENT))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
+                     
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                    break;
+                case ValidationEnums.KEY_TYPE_CEL:
+                    if (!validateRegex(value, ValidationEnums.KEY_ID_CEL))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                    break;
+                case ValidationEnums.KEY_TYPE_EMAIL:
+                    if (!validateRegex(value, ValidationEnums.KEY_ID_EMAIL))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                    break;
+                case ValidationEnums.KEY_TYPE_ALIAS:
+                    if (!validateRegex(value, ValidationEnums.KEY_ID_ALIAS))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                    break;
                 case ValidationEnums.KEY_TYPE_MERCH:
                     if(!validateRegex(value, ValidationEnums.KEY_ID_MERCH)){
-                        return false;
-                    }else{
+
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
+                    }
+                    else{
                         return true;
                     }
                     break;
