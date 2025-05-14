@@ -14,8 +14,6 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
 
         private readonly RedRqMapper redMapper = new RedRqMapper();
 
-        private readonly BuilderHttpUtil _BuilderHttpUtil;
-
 
         public OAuthService()
         {

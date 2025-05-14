@@ -26,8 +26,14 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
         /// </summary>
         private  readonly BuilderHttpUtil _BuilderHttpUtil;
 
-        private  readonly JsonSerializerOptions _jsonOptions;
+        /// <summary>
+        /// 
+        /// </summary>
         private  readonly RedRqMapper _redRqMapper = new RedRqMapper();
+
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly IOAuthService _oauthService = new OAuthService();
 
 
@@ -39,15 +45,17 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
         public RedDeleteAccountServiceImpl()
         {
             _BuilderHttpUtil = new BuilderHttpUtil();
-            _httpClient = _BuilderHttpUtil.BuildClient();
-
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
+            _httpClient = _BuilderHttpUtil.BuildClientWithServerCertificate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="headers"></param>
+        /// <param name="requestBody"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public async Task<MsgInformationResponse> DeleteKeyAsync(string url, HeadersRq headers, DeleteRq requestBody)
         {
             try

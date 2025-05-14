@@ -25,8 +25,9 @@ namespace SPI_Cancellation_Service.Domain.constants
         public const string IP_ORIGIN = "10.415.16.2";
         public const string RBM_FROM = "65a4a028-7b29-44d0-878c-03a479f8a23d";
 
-        public const string IBM_CLIENT_ID = "54cfb091cdd1c1f30f9cb3423a28aebe";
-        public const string IBM_Client_Secret = "c92296aaeeb1965330c077e1a8f73889";
+        public const string IBM_CLIENT_ID = "IBM_CLIENT_ID";
+        public const string IBM_Client_Secret = "IBM_CLIENTSECRET";
+        public const string CERTIFICATE = "CERTIFICATE";
 
         public const string SCOPES = "HUB";
         public const string GRANTYPE = "client_credentials";

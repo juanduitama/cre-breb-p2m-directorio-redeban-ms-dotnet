@@ -27,15 +27,11 @@ namespace SPI_Cancellation_Service.Controllers
         private readonly RedRqMapper _redRqMapper = new RedRqMapper();
         private readonly ResponseSerfiMapper _rsSerfiMapper = new ResponseSerfiMapper();
         private readonly ILogger<DeleteController> _logger;
-        private readonly UriUtil _uriUtil;
+        private readonly UriUtil _uriUtil = new UriUtil();
 
-        public DeleteController(
-            IRedDeleteAccountService deleteService,
-            ILogger<DeleteController> logger)
+        public DeleteController()
         {
-            _deleteService = deleteService;
-            _logger = logger;
-            _uriUtil = new UriUtil();
+           
         }
 
         [HttpPut("cancellation")]

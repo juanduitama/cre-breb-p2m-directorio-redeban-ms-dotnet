@@ -30,10 +30,8 @@ namespace SPI_Cancellation_Service.Utils.mapper
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR, headers.XForwardedFor);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID, Guid.NewGuid().ToString("D"));
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN, ConstantsEnum.ORIGIN);
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CHANNEL, headers.Channel);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RQ_ID, random.NextInt64(100000000000, 999999999999).ToString());
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.AUTHORIZATION, ConstantsEnum.BEARER + " " + token.Trim());
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RBM_USER_DATE, headers.RBMUserDate);
             Console.WriteLine("Estos son los headers para http");
 
             Console.WriteLine(request.DefaultRequestHeaders.ToString());
@@ -80,8 +78,10 @@ namespace SPI_Cancellation_Service.Utils.mapper
         public void addOauthHeaders(HttpClient request)
         {
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE, ConstantsEnum.APPLICATION_URL_ENCODE);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, ConstantsEnum.IBM_CLIENT_ID);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, ConstantsEnum.IBM_Client_Secret);
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, ConstantsEnum.IBM_CLIENT_ID);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID));
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, ConstantsEnum.IBM_Client_Secret);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_Client_Secret));
         }
 
         public RqOAuth mapBodyOauth()
