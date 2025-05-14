@@ -1,0 +1,13 @@
+variables:
+- name: repositoryName #Nombre del repositorio de azure DevOps
+  value: 'r-cliente-originador-consultaexcepcion-ms-dotnet' 
+- name: solutionName #Nombre de la solucion
+  value: 'Serfinanza.Originacion.BUC.Cliente.Correo.sln'
+- name: solutionRoute #Ruta de la solucion
+  value: 'src'
+- name: dockerfileRoute #Ruta del dockerfile
+  value: 'src/Correo.BUC.WebAPI'
+- name: EcrRepositoryName #Nombre del repositorio de ECR
+  value: 'originador-consultaexcepcion'
+- name: UrlGitRepository #Url del repositorio de git
+  value: 'bancoserfinanza@dev.azure.com/bancoserfinanza/originador/_git/r-cliente-originador-consultaexcepcion-ms-dotnet' #Without http:// or https://
