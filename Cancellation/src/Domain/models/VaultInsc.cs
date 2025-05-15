@@ -13,6 +13,6 @@ namespace SPI_Cancellation_Service.Domain.models
     {
         
         [JsonPropertyName("vaultName")]
-        public string vaultName { get; set; }
+        public string? vaultName { get; set; }
     }
 }

@@ -6,11 +6,30 @@ using System.Threading.Tasks;
 
 namespace SPI_Cancellation_Service.Domain.constants
 {
-
+    public enum ResponseEnums
+    {
+        ENRROLLMENT_RESPONSE_SUCCESS,
+    }
     public static class ResponseEnum
     {
-        public const string ENRROLLMENT_RESPONSE_CODE_SUCCESS = "201";
-        public const string ENRROLLMENT_RESPONSE_DESC_SUCCESS = "La llave se creo exitosamente";
-        
+
+        public static string getResponseCode(this ResponseEnums responseEnums)
+        {
+            return responseEnums switch
+            {
+                 ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS => "201",
+                _ => throw new ArgumentOutOfRangeException(nameof(responseEnums))
+            };
+        }
+
+        public static string getResponseMessage(this ResponseEnums responseEnums)
+        {
+            return responseEnums switch
+            {
+                ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS => "La llave se creo exitosamente",
+                _ => throw new ArgumentOutOfRangeException(nameof(responseEnums))
+            };
+        }
+
     }
 }

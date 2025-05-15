@@ -15,15 +15,16 @@
         public const string KEY_ID_ALIAS= "^[@][A-Za-z0-9]{5,19}$";
         public const string KEY_ID_MERCH=  @"^00\d{8}$";
 
-        public const string KEY_ACTIVE_STATUS = "ACTIVA";
-        public const string KEY_BLOCK_STATUS = "BLOQUEADO";
-        public const string KEY_ON_HOLD_STATUS = "ON_HOLD";
-        public const string KEY_CANCEL_STATUS = "CANCELADA";
+        public const string KEY_ACTIVE_BY_CLIENT_STATUS = "ACTV";
+        public const string KEY_ACTIVE_BY_ENTITY_STATUS = "ACTB";
+        public const string KEY_BLOCK_BY_CLIENT_STATUS = "SUSP";
+        public const string KEY_BLOCK_BY_ENTITY_STATUS = "SUSB";
+        public const string KEY_CANCEL_STATUS = "CANC";
 
         public const string VAULT_NAME_RBM = "REDEBAN";
 
         public const string FLOW_SERVICES_CREATE = "cancelacionLinea";
 
-        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff'Z'";
     }
 }

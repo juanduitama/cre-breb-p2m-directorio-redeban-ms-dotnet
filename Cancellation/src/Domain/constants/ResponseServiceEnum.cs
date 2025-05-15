@@ -26,6 +26,7 @@ namespace SPI_Cancellation_Service.Domain.constants
         DIFFERENT_TYPE,
         SERVICE_KEY_ERROR,
         BAD_REQUEST_JSON,
+        AURORA_ERROR,
         SERVICE_INTERNAL_ERROR
         
 
@@ -54,6 +55,7 @@ namespace SPI_Cancellation_Service.Domain.constants
                 ResponseServiceEnum.DIFFERENT_TYPE => "400",
                 ResponseServiceEnum.SERVICE_KEY_ERROR=>"400",
                 ResponseServiceEnum.BAD_REQUEST_JSON => "400",
+                ResponseServiceEnum.AURORA_ERROR => "400",
                 ResponseServiceEnum.SERVICE_INTERNAL_ERROR => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
@@ -77,6 +79,7 @@ namespace SPI_Cancellation_Service.Domain.constants
                 ResponseServiceEnum.DIFFERENT_TYPE => "El tipo de documento es difernete al que se encuentra registrado",
                 ResponseServiceEnum.SERVICE_KEY_ERROR => "No se pudo cancelar llave.",
                 ResponseServiceEnum.BAD_REQUEST_JSON => "Bad request JSON",
+                ResponseServiceEnum.AURORA_ERROR => "Error en la operación con Directorio aval - AURORA DB",
                 ResponseServiceEnum.SERVICE_INTERNAL_ERROR => "Error interno del servidor",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
@@ -99,6 +102,7 @@ namespace SPI_Cancellation_Service.Domain.constants
                 ResponseServiceEnum.DIFFERENT_TYPE => 400,
                 ResponseServiceEnum.SERVICE_KEY_ERROR => 400,
                 ResponseServiceEnum.BAD_REQUEST_JSON => 400,
+                ResponseServiceEnum.AURORA_ERROR => 400,
                 ResponseServiceEnum.SERVICE_INTERNAL_ERROR => 500,
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };

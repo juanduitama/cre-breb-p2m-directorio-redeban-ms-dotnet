@@ -1,3 +1,6 @@
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using SPI_Cancellation_Service.Infrastructure.repositories;
 using SPI_Cancellation_Service.Proxy.cancellation;
 using SPI_Cancellation_Service.Proxy.interfaces;
 
@@ -8,9 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registrar los servicios
-builder.Services.AddSingleton<IRedDeleteAccountService, RedDeleteAccountServiceImpl>();
-builder.Services.AddSingleton<IOAuthService, OAuthService>();
+//// Registrar los servicios
+//builder.Services.AddSingleton<IRedDeleteAccountService, RedDeleteAccountServiceImpl>();
+//builder.Services.AddSingleton<IOAuthService, OAuthService>();
 
 // Configurar logging
 builder.Services.AddLogging(options =>
@@ -18,6 +21,14 @@ builder.Services.AddLogging(options =>
     options.AddConsole();
     options.AddDebug();
 });
+
+#region Contexto de bases de datos 
+
+builder.Services.AddDbContext<AuroraDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("AuroraMySQL"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("AuroraMySQL"))));
+
+#endregion
 
 var app = builder.Build();
 

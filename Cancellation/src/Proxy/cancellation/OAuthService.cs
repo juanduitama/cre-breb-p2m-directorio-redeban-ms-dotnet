@@ -44,14 +44,14 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
             var content = new FormUrlEncodedContent(formData);
 
             // Asegurarse de que el Content-Type es correcto
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(ConstantsEnum.APPLICATION_URL_ENCODE);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(ConstantsEnums.APPLICATION_URL_ENCODE.getValue());
 
             HttpResponseMessage response = await _httpClient.PostAsync(url, content);
             string responseRes = await response.Content.ReadAsStringAsync();
 
-            responseOAuth = await UtilCommons.String2Object<RsOAuth>(responseRes);
+            responseOAuth = UtilCommons.String2Object<RsOAuth>(responseRes);
 
-            string responseOAuthS = await UtilCommons.Object2String(responseRes);
+            string responseOAuthS = UtilCommons.Object2String(responseRes);
 
             Console.WriteLine($"[RES] Respuesta:" + responseOAuthS);
 

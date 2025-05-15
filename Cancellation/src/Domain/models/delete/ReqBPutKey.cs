@@ -7,14 +7,14 @@ namespace SPI_Cancellation_Service.Domain.models.delete
     {
         [ValidateNever]
         [JsonPropertyName("key")]
-        public Key key { get; set; }
+        public Key? key { get; set; }
 
         [ValidateNever]
         [JsonPropertyName("vaultInsc")]
-        public VaultInsc vaultInsc { get; set; }
+        public VaultInsc? vaultInsc { get; set; }
 
 
         [JsonPropertyName("effDtKey")]
-        public EffDtKey effDtKey { get; set; }
+        public EffDtKey? effDtKey { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace SPI_Cancellation_Service.Domain.models
     {
         [Required]
         [JsonPropertyName("merchantId")]
-        public string merchantId { get; set; }
+        public string? merchantId { get; set; }
     }
 }

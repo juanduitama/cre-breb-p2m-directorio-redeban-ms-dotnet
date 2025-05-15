@@ -19,8 +19,8 @@ namespace SPI_Cancellation_Service.Utils.mapper
             meta.systemId = request.deleteHeaders.systemId;
             response.meta = meta;
 
-            response.statusCodigo = ResponseEnum.ENRROLLMENT_RESPONSE_CODE_SUCCESS;
-            response.statusDesc = ResponseEnum.ENRROLLMENT_RESPONSE_DESC_SUCCESS;
+            response.statusCodigo = ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS.getResponseCode();
+            response.statusDesc = ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS.getResponseMessage();
 
             AditionalInfo aditionalInfo = new AditionalInfo();
             aditionalInfo.codigo = responseRedeban.messageInformation.msgCode;

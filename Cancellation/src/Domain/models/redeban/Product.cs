@@ -15,6 +15,6 @@ namespace SPI_Cancellation_Service.Domain.models.redeban
         /// </summary>
         [Required]
         [JsonPropertyName("Account")]
-        public Account account { get; set; }
+        public Account? account { get; set; }
     }
 }

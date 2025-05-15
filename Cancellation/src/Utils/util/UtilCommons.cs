@@ -16,12 +16,12 @@ namespace SPI_Cancellation_Service.Utils.util
         private static readonly JsonSerializerOptions _jsonOptions;
 
 
-        public static async Task<T?> String2Object<T>(string jsonString)
+        public static T? String2Object<T>(string jsonString)
         {
-            return JsonSerializer.Deserialize<T>(jsonString);           
+            return JsonSerializer.Deserialize<T>(jsonString);
         }
 
-        public static async Task<string> Object2String<T>(T obj)
+        public static string Object2String<T>(T obj)
         {
             return JsonSerializer.Serialize(obj, _jsonOptions);
         }

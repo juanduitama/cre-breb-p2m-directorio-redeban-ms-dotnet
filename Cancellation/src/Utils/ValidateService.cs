@@ -9,15 +9,11 @@ namespace SPI_Cancellation_Service.Utils
     public class ValidateService
     {
         
-        public bool validateServiceDeleteKeyModel(ReqBPutKey deleteKeyRq) {
+        public bool validateServiceDeleteKeyModel(ReqBPutKey deleteKeyRq) 
+        {
 
-            //Validación de la llave
-            if (!validateKeyType(deleteKeyRq.key.keyType, deleteKeyRq.key.keyId))
-            {
-                throw new SerfiException(ResponseServiceEnum.INVALID_KEY_TYPE.getErrorCode(), ResponseServiceEnum.INVALID_KEY_TYPE.getMessage(), ResponseServiceEnum.INVALID_KEY_TYPE.getHttpCode());
-            }
-            // Valida el estado de la llave
-            else if (!validateKeyStatus(deleteKeyRq.key.keyStatus))
+            
+            if (!validateKeyStatus(deleteKeyRq.key.keyStatus))
             {
                 throw new SerfiException(ResponseServiceEnum.INVALID_KEY_STATUS.getErrorCode(), ResponseServiceEnum.INVALID_KEY_STATUS.getMessage(), ResponseServiceEnum.INVALID_KEY_STATUS.getHttpCode());
             }
@@ -46,7 +42,6 @@ namespace SPI_Cancellation_Service.Utils
                     }else{
                         return true;
                     }
-                    break;
                 case ValidationEnums.KEY_TYPE_CEL:
                     if(!validateRegex(keyId, ValidationEnums.KEY_ID_CEL)){
                         throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
@@ -54,7 +49,6 @@ namespace SPI_Cancellation_Service.Utils
                     else{
                         return true;
                     }
-                    break;
                 case ValidationEnums.KEY_TYPE_EMAIL:
                     if(!validateRegex(keyId, ValidationEnums.KEY_ID_EMAIL)){
                         throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
@@ -62,7 +56,6 @@ namespace SPI_Cancellation_Service.Utils
                     else{
                         return true;
                     }
-                    break;
                 case ValidationEnums.KEY_TYPE_ALIAS:
                     if(!validateRegex(keyId, ValidationEnums.KEY_ID_ALIAS)){
                         throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
@@ -70,46 +63,41 @@ namespace SPI_Cancellation_Service.Utils
                     else{
                         return true;
                     }
-                    break;
                 case ValidationEnums.KEY_TYPE_MERCH:
                     if(!validateRegex(keyId, ValidationEnums.KEY_ID_MERCH)){
                         throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
                     }
                     else{
                         return true;
-                    }
-                    break;
+                    }                    
                 default:
                     return false;
-                    break;
             }
         }
 
         public bool validateKeyStatus(string keyStatus) {
             switch (keyStatus.ToUpper()) {
-                case ValidationEnums.KEY_BLOCK_STATUS:
-                    return true;
-                break;
-                case ValidationEnums.KEY_ON_HOLD_STATUS:
-                    return true;
-                break;
+                case ValidationEnums.KEY_ACTIVE_BY_CLIENT_STATUS:
+                    return true;                
+                case ValidationEnums.KEY_ACTIVE_BY_ENTITY_STATUS:
+                    return true;                    
+                case ValidationEnums.KEY_BLOCK_BY_CLIENT_STATUS:
+                    return true;                
+                case ValidationEnums.KEY_BLOCK_BY_ENTITY_STATUS:
+                    return true;                
                 case ValidationEnums.KEY_CANCEL_STATUS:
-                    return true;
-                break;
+                    return true;                    
                 default:
-                    return false;
-                break;
+                    return false;            
             }
         }
 
         public bool validateVaultName(string vaultName) {
             switch (vaultName) {
                 case ValidationEnums.VAULT_NAME_RBM:
-                    return true;
-                break;
+                    return true;                
                 default:
-                    return false;
-                break;
+                    return false;                
             }
         }
 
@@ -131,7 +119,7 @@ namespace SPI_Cancellation_Service.Utils
 
         public bool validateStatus(string oldKeyStatus)
         {
-            if (oldKeyStatus == ValidationEnums.KEY_ACTIVE_STATUS)
+            if (oldKeyStatus == ValidationEnums.KEY_ACTIVE_BY_CLIENT_STATUS || oldKeyStatus == ValidationEnums.KEY_ACTIVE_BY_ENTITY_STATUS)
             {
                 return true;
             }

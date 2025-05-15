@@ -66,7 +66,7 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
 
                 ClearHeaders();
 
-                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH, _httpClient);
+                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnums.BASE_URI_OAUTH.getValue(), _httpClient);
 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
 
@@ -75,11 +75,11 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
                 //Agregar cabeceras HTTP necesarias
                 _redRqMapper.AddDeleteHeaders(_httpClient, headers, responseOauth.accessToken);
 
-                string jsonContent = await UtilCommons.Object2String(requestBody);
+                string jsonContent = UtilCommons.Object2String(requestBody);
 
                 Console.WriteLine($"[DEBUG] JSON a enviar: {jsonContent}");
 
-                var content = new StringContent(jsonContent, Encoding.UTF8, ConstantsEnum.APPLICATION_JSON);
+                var content = new StringContent(jsonContent, Encoding.UTF8, ConstantsEnums.APPLICATION_JSON.getValue());
 
                 string contentBody = await content.ReadAsStringAsync();
 
@@ -92,7 +92,7 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
 
                 Console.WriteLine($"[WARN] Respuesta de error: {responseContent}");
 
-                responseRedeban = await UtilCommons.String2Object<MsgInformationResponse>(responseContent);
+                responseRedeban = UtilCommons.String2Object<MsgInformationResponse>(responseContent);
 
                 Console.WriteLine($"[RES] Respuesta: {responseContent}");
 

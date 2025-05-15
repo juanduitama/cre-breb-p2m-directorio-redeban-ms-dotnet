@@ -7,17 +7,17 @@ namespace SPI_Cancellation_Service.Domain.models.openSearchModel
         [Required]
         public string? rqUID { get; set; }
         
-        public AcctInfo acctInfo { get; set; }
+        public AcctInfo? acctInfo { get; set; }
         
-        public CustInfoOS custInfoOS { get; set; }
+        public CustInfoOS? custInfoOS { get; set; }
         
-        public Key key { get; set; }
+        public Key? key { get; set; }
         
-        public VaultInsc vaultInsc { get; set; }
+        public VaultInsc? vaultInsc { get; set; }
 
         [Required]
         public DateTime effDtCreate { get; set; }
         
-        public DateTime? effDtModify { get; set; }
+        public DateTime effDtModify { get; set; }
     }
 }

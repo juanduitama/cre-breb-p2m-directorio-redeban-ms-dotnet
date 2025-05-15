@@ -14,12 +14,12 @@ namespace SPI_Cancellation_Service.Domain.models.redeban.response
          * Objeto del mensaje de respuesta
          */
         [JsonPropertyName("MessageInformation")]
-        public MessageInformation messageInformation { get; set; }
+        public MessageInformation? messageInformation { get; set; }
 
         /**
          * Representa que hay una lista de tipo Envelope en el cuerpo del mensaje
          */
         [JsonPropertyName("AdditionalData")]
-        public AdditionalData aditionalData { get; set; }
+        public AdditionalData? aditionalData { get; set; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using SPI_Cancellation_Service.Proxy.interfaces;
 using SPI_Cancellation_Service.Utils;
@@ -14,6 +12,8 @@ using SPI_Cancellation_Service.Domain.models.redeban.response;
 using SPI_Cancellation_Service.Domain.models.openSearchModel;
 using SPI_Cancellation_Service.Domain.models;
 using SPI_Cancellation_Service.Domain.models.redeban;
+using SPI_Cancellation_Service.ApplicationCore.interfaces;
+using SPI_Cancellation_Service.ApplicationCore.services;
 
 namespace SPI_Cancellation_Service.Controllers
 {
@@ -23,10 +23,10 @@ namespace SPI_Cancellation_Service.Controllers
     {
         private readonly IRedDeleteAccountService _deleteService = new RedDeleteAccountServiceImpl();
         private readonly ValidateService _validationService = new ValidateService();
+        private readonly IAuroraService _auroraService = new AuroraServiceImpl();
         private readonly HeaderSerfiMapper _headersSerfiMapper = new HeaderSerfiMapper();
         private readonly RedRqMapper _redRqMapper = new RedRqMapper();
         private readonly ResponseSerfiMapper _rsSerfiMapper = new ResponseSerfiMapper();
-        private readonly ILogger<DeleteController> _logger;
         private readonly UriUtil _uriUtil = new UriUtil();
 
         public DeleteController()
@@ -40,17 +40,18 @@ namespace SPI_Cancellation_Service.Controllers
                                                    [Required][FromHeader(Name = HeadersSerfiEnum.UUID)] string uuidHeader,
                                                    [Required][FromHeader(Name = HeadersSerfiEnum.TIMESTAMPS)] string timestampsHeader,
                                                    [Required][FromHeader(Name = HeadersSerfiEnum.SYSTEMID)] string systemIdHeader,
+                                                   [FromHeader] DeleteHeaders headers1,
                                                    [FromBody] ReqBPutKey body)
         {
             
 
             DeleteKeyRq deleteKeyRq = new DeleteKeyRq();
             deleteKeyRq.deleteHeaders = _headersSerfiMapper.mapHeaders(apiKeyHeader, authHeader, uuidHeader, timestampsHeader, systemIdHeader);
-            string headers = await UtilCommons.Object2String(deleteKeyRq.deleteHeaders);
+            string headers = UtilCommons.Object2String(deleteKeyRq.deleteHeaders);
             Console.WriteLine("Headers: " + headers);
 
             deleteKeyRq.reqBPutKey = body;
-            string body1 = await UtilCommons.Object2String(deleteKeyRq.reqBPutKey);
+            string body1 = UtilCommons.Object2String(deleteKeyRq.reqBPutKey);
             Console.WriteLine("body: " + body1);
 
             //Validar Request         
@@ -61,11 +62,13 @@ namespace SPI_Cancellation_Service.Controllers
             try
             {
                 
-                _logger.LogInformation("Iniciando proceso de eliminación de llave");
+                
+                Console.WriteLine("Iniciando proceso de eliminación de llave");
                 MsgInformationResponse responseRedeban;
                 //Validar el request
                 _validationService.validateServiceDeleteKeyModel(deleteKeyRq.reqBPutKey);
-                _logger.LogInformation("Termino el proceso de validacion");
+                Console.WriteLine("Termino el proceso de validacion");
+
                 
                 //Consulta la llave que se va a cancelar
                 //OSDefinitive opSearchEntity = await _openSearchService.SearchKey(deleteKeyRq.reqBPutKey.key.keyType, deleteKeyRq.reqBPutKey.key.keyId);
@@ -77,7 +80,7 @@ namespace SPI_Cancellation_Service.Controllers
 
                 string apiUri = _uriUtil.BuildUri(deleteKeyRq.reqBPutKey.key.keyType,deleteKeyRq.reqBPutKey.key.keyId);
                 //string apiUri = "https://b893c53b-3fb1-43b9-b7c2-4a85801e0e88.mock.pstmn.io/Cancellation";
-                _logger.LogInformation($"URL completa: {apiUri}");
+                Console.WriteLine($"URL completa: {apiUri}");
 
                 // Obtener headers de la solicitud
                 HeadersRq headersRed = _redRqMapper.MapHeadersFromRequest(deleteKeyRq.deleteHeaders);
@@ -89,13 +92,13 @@ namespace SPI_Cancellation_Service.Controllers
 
                 if(responseRedeban.messageInformation != null)
                 {
-                    if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE)
+                    if (responseRedeban.messageInformation.msgCode == StatusCodeEnums.RED_PERSON_SUCCESS.getStatusCode() || responseRedeban.messageInformation.msgCode == StatusCodeEnums.RED_PERSON_CREATED.getStatusCode())
                     {
-                        _logger.LogInformation("Se cancelo la llave exitosamente: " + responseRedeban.ToString());
+                        Console.WriteLine("Se cancelo la llave exitosamente: " + responseRedeban.ToString());
                     }
                     else
                     {
-                        _logger.LogError($"No se pudo cancelar la llave: " + responseRedeban.ToString());
+                        Console.WriteLine($"No se pudo cancelar la llave: " + responseRedeban.ToString());
                         throw new SerfiException(ResponseServiceEnum.SERVICE_KEY_ERROR.getErrorCode(), ResponseServiceEnum.SERVICE_KEY_ERROR.getMessage(), ResponseServiceEnum.SERVICE_KEY_ERROR.getHttpCode());
                     }
 
@@ -106,7 +109,7 @@ namespace SPI_Cancellation_Service.Controllers
                     MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapMessageResponse(deleteKeyRq, responseRedeban);
 
 
-                    _logger.LogInformation("Finalizo el proceso");
+                    Console.WriteLine("Finalizo el proceso");
 
                     return Ok(responseService);
                 }
@@ -117,7 +120,7 @@ namespace SPI_Cancellation_Service.Controllers
             }
             catch (JsonException ex)
             {
-                _logger.LogError($"Error al procesar JSON: {ex.Message}");
+                Console.WriteLine($"Error al procesar JSON: {ex.Message}");
 
                 return BadRequest(new
                 {
@@ -127,7 +130,7 @@ namespace SPI_Cancellation_Service.Controllers
             }
             catch (SerfiException ex)
             {
-                _logger.LogError($"Error de serfinanzas: {ex.Message}");
+                Console.WriteLine($"Error de serfinanzas: {ex.Message}");
 
                 return BadRequest(new
                 {

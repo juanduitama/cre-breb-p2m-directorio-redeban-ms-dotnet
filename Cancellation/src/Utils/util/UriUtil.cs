@@ -6,23 +6,10 @@ namespace SPI_Cancellation_Service.Utils.util
 {
     public class UriUtil
     {
-        private readonly IConfiguration _configuration;
-        private readonly string _baseUri;
 
-        public UriUtil(IConfiguration configuration = null)
-        {
-            _configuration = configuration;
 
-            // Si hay configuración disponible, usar la URL base de las configuraciones
-            if (_configuration != null)
-            {
-                _baseUri = _configuration["ApiSettings:BaseUrl"] ?? ConstantsEnum.BASE_URI;
-            }
-            else
-            {
-                // De lo contrario, usar la URL base definida en las constantes
-                _baseUri = ConstantsEnum.BASE_URI;
-            }
+        public UriUtil()
+        {           
         }
 
         /// <summary>
@@ -33,10 +20,10 @@ namespace SPI_Cancellation_Service.Utils.util
         /// <returns>URI completa para la operación</returns>
         public string BuildUri(string keyType, string keyValue)
         {
-            string newUri = getValuePathParameters(ConstantsEnum.DELETE_URI, PathParametersEnum.KEY_TYPE, keyType); 
+            string newUri = getValuePathParameters(ConstantsEnums.DELETE_URI.getValue(), PathParametersEnum.KEY_TYPE, keyType); 
             newUri = getValuePathParameters(newUri, PathParametersEnum.KEY_VALUE, keyValue);
 
-            return _baseUri + newUri;                
+            return ConstantsEnums.BASE_URI.getValue() + newUri;                
             
         }
 

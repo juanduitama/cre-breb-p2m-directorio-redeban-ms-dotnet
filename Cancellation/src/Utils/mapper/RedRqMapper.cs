@@ -23,15 +23,15 @@ namespace SPI_Cancellation_Service.Utils.mapper
 
         public void AddDeleteHeaders(HttpClient request, HeadersRq headers, string token)
         {
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE, headers.ContentType);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.DATE, headers.Date);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RBM_FROM, headers.RBMFrom);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ACCEPT, headers.Accept);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR, headers.XForwardedFor);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID, Guid.NewGuid().ToString("D"));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN, ConstantsEnum.ORIGIN);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RQ_ID, random.NextInt64(100000000000, 999999999999).ToString());
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.AUTHORIZATION, ConstantsEnum.BEARER + " " + token.Trim());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.CONTENT_TYPE.getKeyHeader(), headers.ContentType);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.DATE.getKeyHeader(), headers.Date);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.RBM_FROM.getKeyHeader(), headers.RBMFrom);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.ACCEPT.getKeyHeader(), headers.Accept);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_FORWARDED_FOR.getKeyHeader(), headers.XForwardedFor);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_REQUEST_ID.getKeyHeader(), Guid.NewGuid().ToString("D"));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.ORIGIN.getKeyHeader(), ConstantsEnums.ORIGIN.getValue());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.RQ_ID.getKeyHeader(), random.NextInt64(100000000000, 999999999999).ToString());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.AUTHORIZATION.getKeyHeader(), ConstantsEnums.BEARER.getValue() + " " + token.Trim());
             Console.WriteLine("Estos son los headers para http");
 
             Console.WriteLine(request.DefaultRequestHeaders.ToString());
@@ -45,12 +45,12 @@ namespace SPI_Cancellation_Service.Utils.mapper
             string newDate = headersRq.timeStamps.Replace("Z", "");
             
             headersRed.Date = newDate;
-            headersRed.ContentType = ConstantsEnum.APPLICATION_JSON;
-            headersRed.Accept = ConstantsEnum.APPLICATION_JSON;
-            headersRed.Origin = RedHeadersEnum.ORIGIN;
-            headersRed.XForwardedFor = ConstantsEnum.IP_ORIGIN;
+            headersRed.ContentType = ConstantsEnums.APPLICATION_JSON.getValue();
+            headersRed.Accept = ConstantsEnums.APPLICATION_JSON.getValue();
+            headersRed.Origin = RedHeadersEnums.ORIGIN.getKeyHeader();
+            headersRed.XForwardedFor = ConstantsEnums.IP_ORIGIN.getValue();
             headersRed.XRequestId = headersRq.uuId;
-            headersRed.RBMFrom = ConstantsEnum.RBM_FROM;
+            headersRed.RBMFrom = ConstantsEnums.RBM_FROM.getValue();
 
             return headersRed;
 
@@ -60,7 +60,7 @@ namespace SPI_Cancellation_Service.Utils.mapper
         {
             DeleteRq bodyRed = new DeleteRq();
 
-          string newDate = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.SSS");
+          string newDate = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fff");
 
           bodyRed.requestDateTime = newDate;
           bodyRed.keyStatus = body.key.keyStatus;
@@ -77,18 +77,18 @@ namespace SPI_Cancellation_Service.Utils.mapper
 
         public void addOauthHeaders(HttpClient request)
         {
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE, ConstantsEnum.APPLICATION_URL_ENCODE);
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, ConstantsEnum.IBM_CLIENT_ID);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID));
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, ConstantsEnum.IBM_Client_Secret);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_Client_Secret));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.CONTENT_TYPE.getKeyHeader(), ConstantsEnums.APPLICATION_URL_ENCODE.getValue());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_ID.getKeyHeader(), ConstantsEnums.IBM_CLIENT_ID.getValue());
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_ID.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_SECRET.getKeyHeader(), ConstantsEnums.IBM_CLIENTSECRET.getValue());
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENTSECRET.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_Client_Secret));
         }
 
         public RqOAuth mapBodyOauth()
         {
             RqOAuth rqOauth = new RqOAuth();
-            rqOauth.scopes = ConstantsEnum.SCOPES;
-            rqOauth.grantType = ConstantsEnum.GRANTYPE;
+            rqOauth.scopes = ConstantsEnums.SCOPES.getValue();
+            rqOauth.grantType = ConstantsEnums.GRANTYPE.getValue();
             return rqOauth;
         }
 

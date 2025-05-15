@@ -38,19 +38,5 @@
         /// </summary>
         public string? Origin { get; set; }
 
-        /// <summary>
-        /// Canal de la solicitud
-        /// </summary>
-        public string? Channel { get; set; }
-
-        /// <summary>
-        /// ID de solicitud
-        /// </summary>
-        public string? RqId { get; set; }
-
-        /// <summary>
-        /// Fecha del usuario
-        /// </summary>
-        public string? RBMUserDate { get; set; }
     }
 }

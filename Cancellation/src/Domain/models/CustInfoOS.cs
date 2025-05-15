@@ -22,14 +22,14 @@ namespace SPI_Cancellation_Service.Domain.models
 
         [Required]
         [JsonPropertyName("custType")]
-        public string custType { get; set; }
+        public string? custType { get; set; }
 
         [Required]
         [JsonPropertyName("custIdent")]
-        public CustIdent custIdent { get; set; }
+        public CustIdent? custIdent { get; set; }
 
         [Required]
         [JsonPropertyName("custContact")]
-        public CustContact custContact { get; set; }
+        public CustContact? custContact { get; set; }
     }
 }

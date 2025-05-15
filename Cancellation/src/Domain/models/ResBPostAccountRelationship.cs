@@ -21,6 +21,6 @@ namespace SPI_Cancellation_Service.Domain.models
         /// Cuerpo de la respuesta
         /// </summary>
         [Required]
-        public MsgInformationResponseSerfi msgInformationResponse { get; set;}
+        public MsgInformationResponseSerfi? msgInformationResponse { get; set;}
     }
 }

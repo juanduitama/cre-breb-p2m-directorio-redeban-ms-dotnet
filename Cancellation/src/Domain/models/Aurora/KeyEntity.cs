@@ -9,8 +9,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SPI_Cancellation_Service.Domain.models
 {
-    public class Key
+    public class KeyEntity
     {
+        [JsonPropertyName("pK")]
+        [Key]
+        public Guid? IdKey { get; set; } = Guid.NewGuid(); // Primary key
         /**
          * Tipo de llave seleccionada por el cliente para identificarse en el Sistema de pago de bajo valor inmediato.
          * | MERCHANTID: Identificador de codigo único

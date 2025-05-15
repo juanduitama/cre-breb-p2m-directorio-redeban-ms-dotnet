@@ -10,8 +10,8 @@ namespace SPI_Cancellation_Service.Domain.models
 {
     public class OpenSearchCredentials
     {
-        public string Username { get; set; } = string.Empty;
+        public string? Username { get; set; } = string.Empty;
 
-        public string Password { get; set; } = string.Empty;
+        public string? Password { get; set; } = string.Empty;
     }
 }

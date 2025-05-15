@@ -13,24 +13,24 @@ namespace SPI_Cancellation_Service.Domain.models.redeban
         /// Identificador del banco.
         /// </summary>
         [JsonPropertyName("BankId")]
-        public string bankId { get; set; }
+        public string? bankId { get; set; }
 
         /// <summary>
         /// Tipo de cuenta.
         /// </summary>
         [JsonPropertyName("TypeAccount")]
-        public string typeAccount { get; set; }
+        public string? typeAccount { get; set; }
 
         /// <summary>
         /// Número de cuenta.
         /// </summary>
         [JsonPropertyName("AccountNo")]
-        public string accountNo { get; set; }
+        public string? accountNo { get; set; }
 
         /// <summary>
         /// Número de cuenta.
         /// </summary>
         [JsonPropertyName("AgeAccount")]
-        public string ageAccount { get; set; }
+        public string? ageAccount { get; set; }
     }
 }

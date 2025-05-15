@@ -8,13 +8,13 @@ namespace SPI_Cancellation_Service.Domain.models.oAuth
         /// 
         /// </summary>
         [JsonPropertyName("scopes")]
-        public string scopes { get; set; }
+        public string? scopes { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [JsonPropertyName("grant_type")]
-        public string grantType { get; set; }
+        public string? grantType { get; set; }
 
 
     }

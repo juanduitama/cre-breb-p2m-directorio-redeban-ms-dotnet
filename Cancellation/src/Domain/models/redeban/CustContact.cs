@@ -9,7 +9,7 @@ namespace SPI_Cancellation_Service.Domain.models
         public string? custMobileNumber { get; set; }
 
         [JsonPropertyName("custEmail")]
-        public string custEmail { get; set; }
+        public string? custEmail { get; set; }
 
     }
 }
