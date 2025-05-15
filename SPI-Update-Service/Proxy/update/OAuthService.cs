@@ -43,7 +43,7 @@ namespace SPI_Update_Service.Proxy.update
             var content = new FormUrlEncodedContent(formData);
 
             // Asegurarse de que el Content-Type es correcto
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(ConstantsEnum.APPLICATION_URL_ENCODE);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(ConstantsEnum.APPLICATION_URL_ENCODE.getValue());
 
             HttpResponseMessage response = await _httpClient.PostAsync(url, content);
             string responseRes = await response.Content.ReadAsStringAsync();

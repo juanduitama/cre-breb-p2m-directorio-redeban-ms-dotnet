@@ -13,43 +13,54 @@ namespace domain.constants
     /// 
     /// Requerimiento:
     /// </summary>
-    public static class ConstantsEnum
+    public enum ConstantsEnum
     {
-        public const string PATCH_HTTP_METHOD = "PATCH";
-        public const string APPLICATION_JSON = "application/json";
-        public const string APPLICATION_URL_ENCODE = "application/x-www-form-urlencoded";
-        public const string TYPE_PERSON = "PERSON";
-        public const string ORIGIN = "origin";
-        public const string TYPE_COMMERCE = "COMMERCE";
-        public const string KEY_INQUIRY = "KeyInquiry";
-        public const string ID_INQUIRY = "IdentInquiry";
-        public const string MERCHANT_INQUIRY = "MerchantInquiry";
-        public const string ENROLLMENT = "Enrollment";
-        public const string DELETE = "Cancellation";
-        public const string KEY_UPDATE = "UpdateKey";
-        public const string ACCOUNT_UPDATE = "UpdateAccount";
-        public const string IP_ORIGIN = "10.415.16.2";
-        public const string RBM_FROM = "65a4a028-7b29-44d0-878c-03a479f8a23d";
-        public const string INDEX_DEFINITIVE = "index_definitive";
-        public const int TYPE_KEY_ID = 0;
-        public const int TYPE_OLD_KEY_ID = 1;
-        public const int TYPE_NEW_KEY_ID = 2;
-        public const string IBM_CLIENT_ID = "IBM_CLIENT_ID";
-        public const string IBM_ClientSecret = "IBM_ClientSecret";
-        public const string CERTIFICATE = "CERTIFICATE";
-        public const string BEARER = "Bearer";
+        APPLICATION_JSON,
+        APPLICATION_URL_ENCODE,
+        ORIGIN,
+        IP_ORIGIN,
+        RBM_FROM,
+        IBM_CLIENT_ID,
+        IBM_ClientSecret,
+        CERTIFICATE,
+        BEARER,
 
-        public const string SCOPES = "HUB";
-        public const string GRANTYPE = "client_credentials";
+        SCOPES,
+        GRANTYPE,
 
-
-        public const string BASE_URI_OAUTH = "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/oauth2.0/oauth2/token";
-        public const string BASE_URI_ACCOUNT = "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/keytype/" + ConstantsEnum.KEY_TYPE_PATH + "/key/" + ConstantsEnum.KEY_VALUE_PATH;
-        public const string BASE_URI_KEY = "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/key/" + ConstantsEnum.ID_PATH;
-        public const string KEY_VALUE_PATH = "{keyValue}";
-        public const string KEY_TYPE_PATH = "{keyType}";
-        public const string ID_PATH = "{ID}";
-
-
+        BASE_URI_OAUTH,
+        BASE_URI_ACCOUNT,
+        KEY_VALUE_PATH,
+        KEY_TYPE_PATH,
     }
+
+        public static class ConstantsEnumExtensions
+        {
+            /// <summary>
+            /// Obtiene el código de estado HTTP
+            /// </summary>
+            public static string getValue(this ConstantsEnum constantsEnum)
+            {
+                return constantsEnum switch
+                {
+                    ConstantsEnum.APPLICATION_JSON => "application/json",
+                    ConstantsEnum.APPLICATION_URL_ENCODE => "application/x-www-form-urlencoded",
+                    ConstantsEnum.ORIGIN => "origin",
+                    ConstantsEnum.IP_ORIGIN => "10.415.16.2",
+                    ConstantsEnum.RBM_FROM => "65a4a028-7b29-44d0-878c-03a479f8a23d",
+                    ConstantsEnum.IBM_CLIENT_ID => "IBM_CLIENT_ID",
+                    ConstantsEnum.IBM_ClientSecret => "IBM_ClientSecret",
+                    ConstantsEnum.CERTIFICATE => "CERTIFICATE",
+                    ConstantsEnum.BEARER => "Bearer",
+                    ConstantsEnum.SCOPES => "HUB",
+                    ConstantsEnum.GRANTYPE => "client_credentials",
+                    ConstantsEnum.BASE_URI_OAUTH => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/oauth2.0/oauth2/token",
+                    ConstantsEnum.BASE_URI_ACCOUNT => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/keytype/" + ConstantsEnum.KEY_TYPE_PATH.GetValue() + "/key/" + ConstantsEnum.KEY_VALUE_PATH.GetValue(),
+                    ConstantsEnum.KEY_VALUE_PATH => "{keyValue}",
+                    ConstantsEnum.KEY_TYPE_PATH => "{keyType}",
+                    _ => throw new ArgumentOutOfRangeException(nameof(constantsEnum))
+                };
+            }
+        }
+
 }

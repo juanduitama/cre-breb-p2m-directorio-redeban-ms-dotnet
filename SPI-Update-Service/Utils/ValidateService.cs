@@ -38,21 +38,10 @@ namespace SPI_Update_Service.Utils
             {
                 throw new SerfiException(ResponseServiceEnum.INVALID_TYPE_PERSON.getErrorCode(), ResponseServiceEnum.INVALID_TYPE_PERSON.getMessage(), ResponseServiceEnum.INVALID_TYPE_PERSON.getHttpCode());
             }
-            //Validaciones objeto CustIdent
-            //else if (!validateIdentType(updateAccount.reqBPatchAccount.custInfo.custIdent.custIdentType))
-            //{
-            //    throw new SerfiException(ResponseServiceEnum.INVALID_TYPE_ID.getErrorCode(), ResponseServiceEnum.INVALID_TYPE_ID.getMessage(), ResponseServiceEnum.INVALID_TYPE_ID.getHttpCode());
-            //}
-            // Validaciones custIdent
-            //else if (!validateRegex(updateAccount.reqBPatchAccount.custInfo.custIdent.custIdentId, ValidationEnums.IDENT_ID)
-            //        && !validateSize(updateAccount.reqBPatchAccount.custInfo.custIdent.custIdentId, ValidationEnums.IDENT_ID_SIZE))
-            //{
-            //    throw new SerfiException(ResponseServiceEnum.INVALID_ID.getErrorCode(), ResponseServiceEnum.INVALID_ID.getMessage(), ResponseServiceEnum.INVALID_ID.getHttpCode());
-            //}
             //Validaciones keyType y KeyId
-            else if (!validateKeyType(updateAccount.reqBPatchAccount.key.keyType, updateAccount.reqBPatchAccount.key.keyId, ConstantsEnum.TYPE_KEY_ID))
+            else if (!validateKeyType(updateAccount.reqBPatchAccount.key.keyType, updateAccount.reqBPatchAccount.key.keyId))
             {
-                throw new SerfiException(ResponseServiceEnum.INVALID_KEY_TYPE.getErrorCode(), ResponseServiceEnum.INVALID_KEY_TYPE.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_TYPE.getHttpCode());
+                throw new SerfiException(ResponseServiceEnum.INVALID_KEY_TYPE.getErrorCode(), ResponseServiceEnum.INVALID_KEY_TYPE.getMessage(), ResponseServiceEnum.INVALID_KEY_TYPE.getHttpCode());
             }
             //Validaciones VaultInsc VaultName
             else if (!validateVaultName(updateAccount.reqBPatchAccount.vaultInsc.vaultName))
@@ -133,25 +122,14 @@ namespace SPI_Update_Service.Utils
             return false;
         }
 
-        public bool validateKeyType(string keyType, string keyId, int type)
+        public bool validateKeyType(string keyType, string keyId)
         {
             switch (keyType)
             {
                 case ValidationEnums.KEY_TYPE_IDENT:
                     if (!validateRegex(keyId, ValidationEnums.KEY_ID_IDENT))
                     {
-                        if (type == 0)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
-                        }
-                        else if (type == 1)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_OLD_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getHttpCode());
-                        }
-                        else
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_NEW_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getHttpCode());
-                        }
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
                     }
                     else
                     {
@@ -161,18 +139,7 @@ namespace SPI_Update_Service.Utils
                 case ValidationEnums.KEY_TYPE_CEL:
                     if (!validateRegex(keyId, ValidationEnums.KEY_ID_CEL))
                     {
-                        if (type == 0)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
-                        }
-                        else if (type == 1)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_OLD_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getHttpCode());
-                        }
-                        else
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_NEW_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getHttpCode());
-                        }
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());   
                     }
                     else
                     {
@@ -182,18 +149,7 @@ namespace SPI_Update_Service.Utils
                 case ValidationEnums.KEY_TYPE_EMAIL:
                     if (!validateRegex(keyId, ValidationEnums.KEY_ID_EMAIL))
                     {
-                        if (type == 0)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
-                        }
-                        else if (type == 1)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_OLD_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getHttpCode());
-                        }
-                        else
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_NEW_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getHttpCode());
-                        }
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
                     }
                     else
                     {
@@ -203,18 +159,7 @@ namespace SPI_Update_Service.Utils
                 case ValidationEnums.KEY_TYPE_ALIAS:
                     if (!validateRegex(keyId, ValidationEnums.KEY_ID_ALIAS))
                     {
-                        if (type == 0)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
-                        }
-                        else if (type == 1)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_OLD_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getHttpCode());
-                        }
-                        else
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_NEW_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getHttpCode());
-                        }
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
                     }
                     else
                     {
@@ -224,18 +169,7 @@ namespace SPI_Update_Service.Utils
                 case ValidationEnums.KEY_TYPE_MERCH:
                     if (!validateRegex(keyId, ValidationEnums.KEY_ID_MERCH))
                     {
-                        if (type == 0)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
-                        }
-                        else if (type == 1)
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_OLD_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_OLD_KEY_ID.getHttpCode());
-                        }
-                        else
-                        {
-                            throw new SerfiException(ResponseServiceEnum.INVALID_NEW_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_NEW_KEY_ID.getHttpCode());
-                        }
+                        throw new SerfiException(ResponseServiceEnum.INVALID_KEY_ID.getErrorCode(), ResponseServiceEnum.INVALID_KEY_ID.getMessage(), ResponseServiceEnum.INVALID_KEY_ID.getHttpCode());
                     }
                     else
                     {
@@ -320,24 +254,6 @@ namespace SPI_Update_Service.Utils
             return status.ToUpper().Equals(ValidationEnums.KEY_ACTIVE_STATUS) ? true : false;
         }
 
-        //public bool validateSameId(UpdateKeyRq request, OSDefinitive entity){
-        //    return request.reqBPatchKey.custInfo.custIdent.custIdentId.Equals(entity.custInfoOS.custIdent.custIdentId) ? true : false;
-        //}
-
-        //public bool validateSameId(UpdateAccountRq request, OSDefinitive entity)
-        //{
-        //    return request.reqBPatchAccount.custInfo.custIdent.custIdentId.Equals(entity.custInfoOS.custIdent.custIdentId) ? true : false;
-        //}
-
-        //public bool validateSameIdType(UpdateKeyRq request, OSDefinitive entity){
-        //    return request.reqBPatchKey.custInfo.custIdent.custIdentType.Equals(entity.custInfoOS.custIdent.custIdentType) ? true : false;
-        //}
-
-        //public bool validateSameIdType(UpdateAccountRq request, OSDefinitive entity)
-        //{
-        //    return request.reqBPatchAccount.custInfo.custIdent.custIdentType.Equals(entity.custInfoOS.custIdent.custIdentType) ? true : false;
-        //}
-
         public void validateOSEntityAccount(UpdateAccountRq request, OSDefinitive opSearchEntity)
         {
             if (opSearchEntity == null)
@@ -348,14 +264,6 @@ namespace SPI_Update_Service.Utils
             {
                 throw new SerfiException(ResponseServiceEnum.INVALID_KEY_STATUS.getErrorCode(), ResponseServiceEnum.INVALID_KEY_STATUS.getMessage(), ResponseServiceEnum.INVALID_KEY_STATUS.getHttpCode());
             }
-            //else if (!validateSameId(request, opSearchEntity))
-            //{
-            //    throw new SerfiException(ResponseServiceEnum.DIFFERENT_ID.getErrorCode(), ResponseServiceEnum.DIFFERENT_ID.getMessage(), ResponseServiceEnum.DIFFERENT_ID.getHttpCode());
-            //}
-            //else if (!validateSameIdType(request, opSearchEntity))
-            //{
-            //    throw new SerfiException(ResponseServiceEnum.DIFFERENT_TYPE.getErrorCode(), ResponseServiceEnum.DIFFERENT_TYPE.getMessage(), ResponseServiceEnum.DIFFERENT_TYPE.getHttpCode());
-            //}
         }
 
     }

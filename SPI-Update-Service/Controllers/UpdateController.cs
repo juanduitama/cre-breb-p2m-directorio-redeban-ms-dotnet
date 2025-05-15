@@ -101,7 +101,7 @@ namespace SPI_Update_Service.Controllers
                 responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody);
 
                 Console.WriteLine("Respuesta de redeban: " + await UtilCommons.Object2String(responseRedeban));
-                if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE)
+                if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
                 {
                     Console.WriteLine("Se modificó el producto exitosamente. ");
                 }

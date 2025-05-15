@@ -27,16 +27,16 @@
         public const string CUST_IDENT_TYPE_PAS = "PAS";
         public const string CUST_IDENT_TYPE_TDI = "TDI";
 
-        
+
         public const string IDENT_ID_SIZE = "18";
         public const string IDENT_ID = "^[a-zA-Z0-9]+$";
-        
+
         public const string KEY_TYPE_IDENT = "USERIDENTIFICATION";
         public const string KEY_TYPE_CEL = "MSISDN";
         public const string KEY_TYPE_EMAIL = "EMAIL";
         public const string KEY_TYPE_ALIAS = "ALIAS";
         public const string KEY_TYPE_MERCH = "MERCHANTID";
-        
+
         public const string KEY_ID_IDENT = "^[A-Za-z0-9]{6,18}$";
         public const string KEY_ID_CEL = "^3[0-9]{9}$";
         public const string KEY_ID_EMAIL= "^[a-zA-Z0-9._%+-]{1,30}@[a-zA-Z0-9.-]{1,61}$";
@@ -49,6 +49,6 @@
 
         public const string FLOW_SERVICES_CREATE = "creacionLinea";
 
-        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff'Z'";
     }
 }

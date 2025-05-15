@@ -9,12 +9,25 @@ namespace domain.constants
     /// <summary>
     /// HeadersEnum define los valores para los encabezados
     /// </summary>
-    public static class StatusCodeEnum
+    public enum StatusCodeEnum
     {
-        public const string PERSON_SUCCESS_STATUS_CODE = "200";
-        public const string RED_PERSON_SUCCESS_STATUS_CODE = "NT00";
-        public const string PERSON_CREATED_STATUS_CODE = "201";
-        public const string RED_PERSON_CREATED_STATUS_CODE = "U000";
-        
+        PERSON_SUCCESS_STATUS_CODE,
+        RED_PERSON_SUCCESS_STATUS_CODE,
+        PERSON_CREATED_STATUS_CODE,
+        RED_PERSON_CREATED_STATUS_CODE,
     }
+        public static class ConstantsEnumExtensions
+        {
+            public static string getValue(this StatusCodeEnum statusCodeEnum)
+            {
+                return statusCodeEnum switch
+                {
+                    StatusCodeEnum.PERSON_SUCCESS_STATUS_CODE => "200",
+                    StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE => "NT00",
+                    StatusCodeEnum.PERSON_CREATED_STATUS_CODE => "201",
+                    StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE => "U000",
+        _ => throw new ArgumentOutOfRangeException(nameof(statusCodeEnum))
+                };
+            }
+        }
 }

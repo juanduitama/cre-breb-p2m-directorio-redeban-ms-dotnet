@@ -19,8 +19,5 @@ namespace domain.models
         [JsonPropertyName("flowService")]
         public string flowService { get; set; }
 
-        
-        [JsonPropertyName("vaultId")]
-        public long vaultId { get; set; }
     }
 }

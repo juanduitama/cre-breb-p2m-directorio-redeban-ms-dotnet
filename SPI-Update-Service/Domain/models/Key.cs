@@ -35,48 +35,5 @@ namespace domain.models
         [JsonPropertyName("keyStatus")]
         public string keyStatus { get; set; }
 
-        /**
-        * Tipo de llave seleccionada por el cliente para identificarse en el Sistema de pago de bajo valor inmediato. Antiguo
-        * | MERCHANTID: Identificador de codigo único
-        * | USERIDENTIFICATION: Documento de identidad
-        * |MSISDN: Número de celular
-        * | EMAIL: Correo electrónico
-        * | ALIAS: Identificador alfanumérico |
-        */
-        [JsonPropertyName("oldKeyType")]
-        public string oldKeyType { get; set; }
-
-        /**
-         * Valor de la llave antiguo
-         */
-        [JsonPropertyName("oldKeyId")]
-        public string oldKeyId { get; set; }
-
-        /**
-         * Estado de la llave Antiguo | ACTIVA: Activa | BLOQUEADA: Bloqueada
-         * | ON_HOLD: Suspendida por proceso de portabilidad | CANCELADA: Cancelada
-         */
-        [JsonPropertyName("oldKeyStatus")]
-        public string oldKeyStatus { get; set; }
-
-        /**
-         * Valor de la llave nuevo
-         */
-        [JsonPropertyName("newKeyType")]
-        public string newKeyType { get; set; }
-
-        /**
-        * Estado de la llave Antiguo | ACTIVA: Activa | BLOQUEADA: Bloqueada
-        * | ON_HOLD: Suspendida por proceso de portabilidad | CANCELADA: Cancelada
-        */
-        [JsonPropertyName("newKeyId")]
-        public string newKeyId { get; set; }
-
-        /**
-         * Estado de la llave Antiguo | ACTIVA: Activa | BLOQUEADA: Bloqueada
-         * | ON_HOLD: Suspendida por proceso de portabilidad | CANCELADA: Cancelada
-         */
-        [JsonPropertyName("newKeyStatus")]
-        public string newKeyStatus { get; set; }
     }
 }

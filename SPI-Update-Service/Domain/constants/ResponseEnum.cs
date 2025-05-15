@@ -7,10 +7,25 @@ using System.Threading.Tasks;
 namespace domain.constants
 {
 
-    public static class ResponseEnun
+    public enum ResponseEnun
     {
-        public const string ENRROLLMENT_RESPONSE_CODE_SUCCESS = "201";
-        public const string ENRROLLMENT_RESPONSE_DESC_SUCCESS = "La llave se creo exitosamente";
-        
+        ENRROLLMENT_RESPONSE_CODE_SUCCESS,
+        ENRROLLMENT_RESPONSE_DESC_SUCCESS,
+
+    }
+    public static class ResponseEnunExtensions
+    {
+
+        public static string getValue(this ResponseEnun responseEnum)
+        {
+            return responseEnum switch
+            {
+                ResponseEnun.ENRROLLMENT_RESPONSE_CODE_SUCCESS => "201",
+                ResponseEnun.ENRROLLMENT_RESPONSE_DESC_SUCCESS => "La llave se modificó exitosamente",
+
+                _ => throw new ArgumentOutOfRangeException(nameof(responseEnum))
+            };
+
+        }
     }
 }

@@ -10,17 +10,6 @@ namespace domain.models
 {
     public class AcctInfo
     {
-        /// <summary>
-        /// Tipo de cuenta
-        /// </summary>
-        [JsonPropertyName("acctType")]
-        public string acctType { get; set; }
-
-        /// <summary>
-        /// Identificador de la cuenta
-        /// </summary>
-        [JsonPropertyName("acctId")]
-        public string acctId { get; set; }
 
         /// <summary>
         /// Tipo de cuenta

@@ -15,11 +15,5 @@ namespace domain.models.redeban.response
          */
         [JsonPropertyName("MessageInformation")]
         public MessageInformation? messageInformation { get; set; }
-
-        /**
-         * Representa que hay una lista de tipo Envelope en el cuerpo del mensaje
-         */
-        [JsonPropertyName("AdditionalData")]
-        public AdditionalData? aditionalData { get; set; }
     }
 }

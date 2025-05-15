@@ -41,7 +41,7 @@ namespace SPI_Update_Service.Utils.util
         // 🔧 Método de utilidad para cargar un certificado del servidor desde .pem
         private X509Certificate2 LoadTrustedServerCertificate()
         {
-            var serverCertPath = Environment.GetEnvironmentVariable(ConstantsEnum.CERTIFICATE);
+            var serverCertPath = Environment.GetEnvironmentVariable(ConstantsEnum.CERTIFICATE.getValue());
 
             if (string.IsNullOrEmpty(serverCertPath))
             {

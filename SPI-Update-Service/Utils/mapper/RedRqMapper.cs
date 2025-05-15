@@ -4,6 +4,7 @@ using domain.models.enrollment;
 using domain.models.redeban;
 using SPI_Update_Service.domain.models.redeban;
 using domain.models.oAuth;
+using Microsoft.VisualBasic;
 
 namespace SPI_Update_Service.Utils.mapper
 {
@@ -23,15 +24,13 @@ namespace SPI_Update_Service.Utils.mapper
         public void AddUpdateHeaders(HttpClient request, HeadersRq headers, string token)
         {
 
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE, headers.ContentType);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.DATE, headers.Date);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RBM_FROM, headers.RBMFrom);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ACCEPT, headers.Accept);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR, headers.XForwardedFor);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID, Guid.NewGuid().ToString("D"));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN, ConstantsEnum.ORIGIN);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RQ_ID, random.NextInt64(100000000000, 999999999999).ToString());
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.AUTHORIZATION, ConstantsEnum.BEARER + " " + token.Trim());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE.getValue(), headers.ContentType);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.DATE.getValue(), headers.Date);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RBM_FROM.getValue(), headers.RBMFrom);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ACCEPT.getValue(), headers.Accept);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR.getValue(), headers.XForwardedFor);
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID.getValue(), Guid.NewGuid().ToString("D"));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN.getValue(), ConstantsEnum.ORIGIN.getValue());
             Console.WriteLine("Estos son los headers para http: " + request.DefaultRequestHeaders.ToString());
 
         }
@@ -44,12 +43,12 @@ namespace SPI_Update_Service.Utils.mapper
             string newDate = headersRq.timeStamps.Replace("Z", "");
 
             headersRed.Date = newDate;
-            headersRed.ContentType = ConstantsEnum.APPLICATION_JSON;
-            headersRed.Accept = ConstantsEnum.APPLICATION_JSON;
-            headersRed.Origin = RedHeadersEnum.ORIGIN;
-            headersRed.XForwardedFor = ConstantsEnum.IP_ORIGIN;
+            headersRed.ContentType = ConstantsEnum.APPLICATION_JSON.getValue();
+            headersRed.Accept = ConstantsEnum.APPLICATION_JSON.getValue();
+            headersRed.Origin = RedHeadersEnum.ORIGIN.getValue();
+            headersRed.XForwardedFor = ConstantsEnum.IP_ORIGIN.getValue();
             headersRed.XRequestId = headersRq.uuId;
-            headersRed.RBMFrom = ConstantsEnum.RBM_FROM;
+            headersRed.RBMFrom = ConstantsEnum.RBM_FROM.getValue();
 
             return headersRed;
 
@@ -57,17 +56,17 @@ namespace SPI_Update_Service.Utils.mapper
 
         public void addOauthHeaders(HttpClient request)
         {
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE, ConstantsEnum.APPLICATION_URL_ENCODE);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET, Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE.getValue(), ConstantsEnum.APPLICATION_URL_ENCODE.getValue());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID.getValue()));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret.getValue()));
         }
 
 
         public RqOAuth mapBodyOauth()
         {
             RqOAuth rqOauth = new RqOAuth();
-            rqOauth.scopes = ConstantsEnum.SCOPES;
-            rqOauth.grantType = ConstantsEnum.GRANTYPE;
+            rqOauth.scopes = ConstantsEnum.SCOPES.getValue();
+            rqOauth.grantType = ConstantsEnum.GRANTYPE.getValue();
             return rqOauth;
         }
 
@@ -76,7 +75,7 @@ namespace SPI_Update_Service.Utils.mapper
             UpdateAcctRq bodyRed = new UpdateAcctRq();
 
 
-            bodyRed.requestDateTime = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fff");
+            bodyRed.requestDateTime = DateTime.Now.ToString(ValidationEnums.DATE_FORMAT);
 
             Customer customer = new Customer();
             customer.type = reqBPatchAccount.custInfo.custType;

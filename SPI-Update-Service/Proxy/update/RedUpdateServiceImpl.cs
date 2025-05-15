@@ -59,7 +59,7 @@ namespace SPI_Update_Service.Proxy.update
 
                 ClearHeaders();
 
-                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH, _httpClient);
+                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);
 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
 
@@ -72,7 +72,7 @@ namespace SPI_Update_Service.Proxy.update
 
                 Console.WriteLine($"[DEBUG] body a enviar: {jsonContent}");
 
-                var content = new StringContent(jsonContent, Encoding.UTF8, ConstantsEnum.APPLICATION_JSON);
+                var content = new StringContent(jsonContent, Encoding.UTF8, ConstantsEnum.APPLICATION_JSON.getValue());
 
                 string contentBody = await content.ReadAsStringAsync();
 
