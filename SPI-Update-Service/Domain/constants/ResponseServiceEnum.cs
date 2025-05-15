@@ -33,6 +33,9 @@ namespace domain.constants
         DIFFERENT_ID,
         DIFFERENT_TYPE,
         SERVICE_ACCOUNT_ERROR,
+
+        DYNAMO_ERROR,
+        DYNAMO_CLIENT_ERROR,
        
     }
 
@@ -66,6 +69,8 @@ namespace domain.constants
                 ResponseServiceEnum.DIFFERENT_ID => "400",
                 ResponseServiceEnum.DIFFERENT_TYPE => "400",
                 ResponseServiceEnum.SERVICE_ACCOUNT_ERROR => "400",
+                ResponseServiceEnum.DYNAMO_ERROR => "500",
+                ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -94,6 +99,8 @@ namespace domain.constants
                 ResponseServiceEnum.DIFFERENT_ID => "El número de identificación es diferente al que se encuentra regsitrado",
                 ResponseServiceEnum.DIFFERENT_TYPE => "El tipo de documento es difernete al que se encuentra registrado",
                 ResponseServiceEnum.SERVICE_ACCOUNT_ERROR => "No se pudo modificar el producto.",
+                ResponseServiceEnum.DYNAMO_ERROR => "Hubo un problema al realizar la operación en Dynamo DB",
+                ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "No se pudo realizar la conexión al cliente Dynamo DB",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -123,6 +130,8 @@ namespace domain.constants
                 ResponseServiceEnum.DIFFERENT_TYPE => 400,
                 ResponseServiceEnum.SERVICE_ACCOUNT_ERROR => 400,
                 ResponseServiceEnum.INVALID_KEY_ID => 400,
+                ResponseServiceEnum.DYNAMO_ERROR => 500,
+                ResponseServiceEnum.DYNAMO_CLIENT_ERROR => 500,
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
