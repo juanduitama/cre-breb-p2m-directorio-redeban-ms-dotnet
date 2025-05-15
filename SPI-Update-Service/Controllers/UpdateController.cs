@@ -12,11 +12,11 @@ using domain.models.openSearchModel;
 using domain.models.redeban.response;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using OpenSearch.Client;
 using SPI_Update_Service.Proxy.interfaces;
 using SPI_Update_Service.Utils.util;
 using SPI_Update_Service.Utils.mapper;
 using SPI_Update_Service.Utils;
+using Domain.constants;
 
 namespace SPI_Update_Service.Controllers
 {
@@ -29,7 +29,6 @@ namespace SPI_Update_Service.Controllers
         private readonly ValidateService validateService = new ValidateService();
         private readonly HeaderSerfiMapper _headersMapper = new HeaderSerfiMapper();
         private readonly RedRqMapper _redRqMapper = new RedRqMapper();
-        private readonly RqMapperOs _rqMapperOs = new RqMapperOs();
         private readonly ResponseSerfiMapper _rsSerfiMapper = new ResponseSerfiMapper();
 
         public UpdateController(

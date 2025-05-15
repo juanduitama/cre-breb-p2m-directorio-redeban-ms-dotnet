@@ -16,8 +16,8 @@ namespace domain.constants
         PERSON_CREATED_STATUS_CODE,
         RED_PERSON_CREATED_STATUS_CODE,
     }
-        public static class ConstantsEnumExtensions
-        {
+        public static class StatusCodeEnumExtensions
+    {
             public static string getValue(this StatusCodeEnum statusCodeEnum)
             {
                 return statusCodeEnum switch

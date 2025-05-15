@@ -55,7 +55,7 @@ namespace domain.constants
                     ConstantsEnum.SCOPES => "HUB",
                     ConstantsEnum.GRANTYPE => "client_credentials",
                     ConstantsEnum.BASE_URI_OAUTH => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/oauth2.0/oauth2/token",
-                    ConstantsEnum.BASE_URI_ACCOUNT => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/keytype/" + ConstantsEnum.KEY_TYPE_PATH.GetValue() + "/key/" + ConstantsEnum.KEY_VALUE_PATH.GetValue(),
+                    ConstantsEnum.BASE_URI_ACCOUNT => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/keytype/" + ConstantsEnum.KEY_TYPE_PATH.getValue() + "/key/" + ConstantsEnum.KEY_VALUE_PATH.getValue(),
                     ConstantsEnum.KEY_VALUE_PATH => "{keyValue}",
                     ConstantsEnum.KEY_TYPE_PATH => "{keyType}",
                     _ => throw new ArgumentOutOfRangeException(nameof(constantsEnum))

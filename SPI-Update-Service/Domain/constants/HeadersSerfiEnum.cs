@@ -1,6 +1,6 @@
-﻿using domain.constants;
+﻿using Domain.constants;
 
-namespace domain.constants
+namespace Domain.constants
 {
     public static class HeadersSerfiEnum
     {
