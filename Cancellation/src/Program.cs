@@ -1,4 +1,4 @@
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using SPI_Cancellation_Service.Infrastructure.repositories;
 using SPI_Cancellation_Service.Proxy.cancellation;
@@ -24,9 +24,18 @@ builder.Services.AddLogging(options =>
 
 #region Contexto de bases de datos 
 
+var cnxBuilder = new SqlConnectionStringBuilder
+{
+    DataSource = Environment.GetEnvironmentVariable("SERVER"),
+    InitialCatalog = Environment.GetEnvironmentVariable("DATABASE"),
+    UserID = Environment.GetEnvironmentVariable("USER_ID"),
+    Password = Environment.GetEnvironmentVariable("PASSWORD"),
+    IntegratedSecurity = Convert.ToBoolean(Environment.GetEnvironmentVariable("INTEGRATED_SECURITY")),
+    TrustServerCertificate = Convert.ToBoolean(Environment.GetEnvironmentVariable("TRUST_SERVER_CERTIFICATE"))
+};
+
 builder.Services.AddDbContext<AuroraDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("AuroraMySQL"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("AuroraMySQL"))));
+    options.UseMySql(cnxBuilder.ConnectionString, ServerVersion.AutoDetect(cnxBuilder.ConnectionString)));
 
 #endregion
 
