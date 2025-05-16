@@ -30,7 +30,7 @@ namespace SPI_Update_Service.ApplicationCore.services
 
                 if (key != null)
                 {
-                    Console.WriteLine("Se encontró el siguiente registro: " + await UtilCommons.Object2String(key));
+                    Console.WriteLine("Se encontró el siguiente registro: " + UtilCommons.Object2String(key));
                 }
                 else
                 {

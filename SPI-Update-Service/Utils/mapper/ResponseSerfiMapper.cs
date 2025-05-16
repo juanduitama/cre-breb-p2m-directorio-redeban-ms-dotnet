@@ -4,7 +4,6 @@ using domain.constants;
 using domain.models;
 using domain.models.enrollment;
 using domain.models.redeban.response;
-using domain.models.openSearchModel;
 
 namespace SPI_Update_Service.Utils.mapper
 {

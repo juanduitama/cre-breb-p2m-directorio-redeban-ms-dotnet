@@ -68,7 +68,7 @@ namespace SPI_Update_Service.Proxy.update
 
                 redMapper.AddUpdateHeaders(_httpClient, headers, responseOauth.accessToken);
 
-                string jsonContent = await UtilCommons.Object2String(requestBody);
+                string jsonContent = UtilCommons.Object2String(requestBody);
 
                 Console.WriteLine($"[DEBUG] body a enviar: {jsonContent}");
 
@@ -82,7 +82,7 @@ namespace SPI_Update_Service.Proxy.update
 
                 string responseRes = await response.Content.ReadAsStringAsync();
 
-                responseRedeban = await UtilCommons.String2Object<MsgInformationResponse>(responseRes);
+                responseRedeban = UtilCommons.String2Object<MsgInformationResponse>(responseRes);
 
                 Console.WriteLine($"[RES] Respuesta: {responseRes}");
 

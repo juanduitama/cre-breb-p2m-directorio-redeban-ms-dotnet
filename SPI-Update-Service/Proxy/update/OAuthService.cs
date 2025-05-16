@@ -48,9 +48,9 @@ namespace SPI_Update_Service.Proxy.update
             HttpResponseMessage response = await _httpClient.PostAsync(url, content);
             string responseRes = await response.Content.ReadAsStringAsync();
 
-            responseOAuth = await UtilCommons.String2Object<RsOAuth>(responseRes);
+            responseOAuth = UtilCommons.String2Object<RsOAuth>(responseRes);
 
-            string responseOAuthS = await UtilCommons.Object2String(responseRes);
+            string responseOAuthS = UtilCommons.Object2String(responseRes);
 
             Console.WriteLine($"[RES] Respuesta:" + responseOAuthS);
 

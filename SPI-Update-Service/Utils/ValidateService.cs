@@ -1,7 +1,6 @@
 ﻿using domain.constants;
 using domain.models;
 using domain.models.enrollment;
-using domain.models.openSearchModel;
 using System.Text.RegularExpressions;
 
 namespace SPI_Update_Service.Utils
@@ -252,18 +251,6 @@ namespace SPI_Update_Service.Utils
         public bool validateOldStatus(string status)
         {
             return status.ToUpper().Equals(ValidationEnums.KEY_ACTIVE_STATUS) ? true : false;
-        }
-
-        public void validateOSEntityAccount(UpdateAccountRq request, OSDefinitive opSearchEntity)
-        {
-            if (opSearchEntity == null)
-            {
-                throw new SerfiException(ResponseServiceEnum.NOT_FOUND_KEY.getErrorCode(), ResponseServiceEnum.NOT_FOUND_KEY.getMessage(), ResponseServiceEnum.NOT_FOUND_KEY.getHttpCode());
-            }
-            else if (!validateOldStatus(opSearchEntity.key.oldKeyStatus))
-            {
-                throw new SerfiException(ResponseServiceEnum.INVALID_KEY_STATUS.getErrorCode(), ResponseServiceEnum.INVALID_KEY_STATUS.getMessage(), ResponseServiceEnum.INVALID_KEY_STATUS.getHttpCode());
-            }
         }
 
     }

@@ -8,10 +8,8 @@ using domain.constants;
 using domain.models.enrollment;
 using domain.models.redeban;
 using SPI_Update_Service.domain.models.redeban;
-using domain.models.openSearchModel;
 using domain.models.redeban.response;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using SPI_Update_Service.Proxy.interfaces;
 using SPI_Update_Service.Utils.util;
 using SPI_Update_Service.Utils.mapper;
@@ -60,11 +58,11 @@ namespace SPI_Update_Service.Controllers
 
             UpdateAccountRq request = new UpdateAccountRq();
             request.updateHeaders = _headersMapper.mapHeaders(apiKeyHeader, authHeader, uuidHeader, timestampsHeader, systemIdHeader);
-            string headers = await UtilCommons.Object2String(request.updateHeaders);
+            string headers = UtilCommons.Object2String(request.updateHeaders);
             Console.WriteLine("headers: " + headers);
 
             request.reqBPatchAccount = body;
-            string body1 = await UtilCommons.Object2String(request.reqBPatchAccount);
+            string body1 = UtilCommons.Object2String(request.reqBPatchAccount);
             Console.WriteLine("body: " + body1);
 
             try
@@ -99,7 +97,7 @@ namespace SPI_Update_Service.Controllers
                 // Llamar al servicio
                 responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody);
 
-                Console.WriteLine("Respuesta de redeban: " + await UtilCommons.Object2String(responseRedeban));
+                Console.WriteLine("Respuesta de redeban: " + UtilCommons.Object2String(responseRedeban));
                 if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
                 {
                     Console.WriteLine("Se modificó el producto exitosamente. ");

@@ -16,22 +16,13 @@ namespace SPI_Update_Service.Utils.util
         public string BuildUriAccount(string valueKey, string valueType)
         {
 
-            string _baseUri = ConstantsEnum.BASE_URI_ACCOUNT;
-            string newUrl = getValuePathParameters(_baseUri, ConstantsEnum.KEY_TYPE_PATH, valueType);
+            string _baseUri = ConstantsEnum.BASE_URI_ACCOUNT.getValue();
+            string newUrl = getValuePathParameters(_baseUri, ConstantsEnum.KEY_TYPE_PATH.getValue(), valueType);
 
-            newUrl = getValuePathParameters(newUrl, ConstantsEnum.KEY_VALUE_PATH, valueKey);
+            newUrl = getValuePathParameters(newUrl, ConstantsEnum.KEY_VALUE_PATH.getValue(), valueKey);
 
             return newUrl;
         }
-
-
-        public string BuildUriKey(string valueId)
-        {
-            string _baseUri = ConstantsEnum.BASE_URI_KEY;
-            Console.WriteLine("Base url: " + _baseUri);
-            return getValuePathParameters(_baseUri, ConstantsEnum.ID_PATH, valueId);
-        }
-
 
 
         /// <summary>
