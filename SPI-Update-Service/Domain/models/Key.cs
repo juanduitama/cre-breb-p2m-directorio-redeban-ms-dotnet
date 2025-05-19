@@ -35,5 +35,24 @@ namespace domain.models
         [JsonPropertyName("keyStatus")]
         public string keyStatus { get; set; }
 
+        [JsonPropertyName("oldKeyType")]
+        public string oldKeyType { get; set; }
+
+
+        [JsonPropertyName("oldKeyId")]
+        public string oldKeyId { get; set; }
+
+        [JsonPropertyName("oldKeyStatus")]
+        public string oldKeyStatus { get; set; }
+
+        [JsonPropertyName("newKeyType")]
+        public string newKeyType { get; set; }
+
+        [JsonPropertyName("newKeyId")]
+        public string newKeyId { get; set; }
+
+        [JsonPropertyName("newKeyStatus")]
+        public string newKeyStatus { get; set; }
+
     }
 }

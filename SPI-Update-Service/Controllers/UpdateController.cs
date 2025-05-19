@@ -159,5 +159,88 @@ namespace SPI_Update_Service.Controllers
             }
         }
 
+        [HttpPatch("key")]
+        public async Task<IActionResult> UpdateKey([FromHeader(Name = HeadersSerfiEnum.API_KEY)] string apiKeyHeader,
+                                                   [FromHeader(Name = HeadersSerfiEnum.AUTHENTICATION)] string authHeader,
+                                                   [FromHeader(Name = HeadersSerfiEnum.UUID)] string uuidHeader,
+                                                   [FromHeader(Name = HeadersSerfiEnum.TIMESTAMPS)] string timestampsHeader,
+                                                   [FromHeader(Name = HeadersSerfiEnum.SYSTEMID)] string systemIdHeader,
+                                                   [FromBody] ReqBPatchKey body)
+        {
+
+            UpdateKeyRq request = new UpdateKeyRq();
+            request.updateHeaders = _headersMapper.mapHeaders(apiKeyHeader, authHeader, uuidHeader, timestampsHeader, systemIdHeader);
+            string headers = UtilCommons.Object2String(request.updateHeaders);
+            Console.WriteLine("headers: " + headers);
+
+            request.reqBPatchKey = body;
+            string body1 = UtilCommons.Object2String(request.reqBPatchKey);
+            Console.WriteLine("body: " + body1);
+
+
+            try
+            {
+                Console.WriteLine("Iniciando proceso de actualización de llave");
+                MsgInformationResponse responseRedeban;
+                validateService.ValidateServiceUpdateKeyModel(request);
+
+                string apiUri = _uriUtil.BuildUriKey(request.reqBPatchKey.custInfo.custIdent.custIdentId);
+
+                // Obtener headers de la solicitud
+                HeadersRq headersRq = _redRqMapper.MapHeadersFromRequest(request.updateHeaders);
+                UpdateKeyPersonRq updateBody = _redRqMapper.MapBodyKeyFromRequest(request);
+
+                // Llamar al servicio
+                responseRedeban = await _updateService.UpdateKeyAsync(apiUri, headersRq, updateBody);
+
+                if(responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
+                {
+                    Console.WriteLine("Se modificó la llave exitosamente: " + UtilCommons.Object2String(responseRedeban));
+                }
+                else
+                {
+                    Console.WriteLine($"No se pudo modificar la llave. ");
+                    throw new SerfiException(ResponseServiceEnum.SERVICE_KEY_ERROR.getErrorCode(), ResponseServiceEnum.SERVICE_KEY_ERROR.getMessage(), ResponseServiceEnum.SERVICE_KEY_ERROR.getHttpCode());
+                }
+
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapMessageResponseKey(request, responseRedeban.messageInformation);
+
+                Console.WriteLine("Finalizo el proceso de modificación");
+
+                return Ok(responseService);
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Error al procesar JSON: {ex.Message}");
+
+                return BadRequest(new
+                {
+                    error = "Formato JSON inválido",
+                    message = ex.Message
+                });
+            }
+            catch (SerfiException ex)
+            {
+                Console.WriteLine($"Error de serfinanzas: {ex.Message}");
+
+                return BadRequest(new
+                {
+                    code = ex.errorCode,
+                    error = ex.message
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en la inscripción: {ex.Message}");
+
+                return StatusCode(500, new
+                {
+                    error = "Error interno del servidor",
+                    message = ex.Message,
+                    timestamp = DateTime.UtcNow.ToString()
+                });
+            }
+        }
     }
+
 }

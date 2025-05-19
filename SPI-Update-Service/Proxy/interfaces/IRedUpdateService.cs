@@ -15,5 +15,6 @@ namespace SPI_Update_Service.Proxy.interfaces
         /// Método para eliminar una llave
         /// </summary>
         Task<MsgInformationResponse> UpdateAccountAsync(string url, HeadersRq headers, UpdateAcctRq request);
+        Task<MsgInformationResponse> UpdateKeyAsync(string url, HeadersRq headers, UpdateKeyPersonRq request);
     }
 }

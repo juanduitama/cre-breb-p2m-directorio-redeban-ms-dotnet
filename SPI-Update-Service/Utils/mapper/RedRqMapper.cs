@@ -122,6 +122,21 @@ namespace SPI_Update_Service.Utils.mapper
             return bodyRed;
         }
 
+        public UpdateKeyPersonRq MapBodyKeyFromRequest(UpdateKeyRq request)
+        {
+
+            UpdateKeyPersonRq bodyRed = new UpdateKeyPersonRq();
+
+            bodyRed.requestDateTime = request.updateHeaders.timeStamps;
+            bodyRed.partySystemIdentifier = request.reqBPatchKey.key.oldKeyType;
+            bodyRed.partyIdentifier = request.reqBPatchKey.key.oldKeyId;
+            bodyRed.newPartySystemIdentifier = request.reqBPatchKey.key.newKeyType;
+            bodyRed.newPartyIdentifier = request.reqBPatchKey.key.newKeyId;
+
+            return bodyRed;
+
+
+        }
 
 
     }

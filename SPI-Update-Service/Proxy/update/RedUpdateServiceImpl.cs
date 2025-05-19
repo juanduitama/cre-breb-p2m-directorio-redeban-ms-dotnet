@@ -110,6 +110,69 @@ namespace SPI_Update_Service.Proxy.update
             }
             throw new NotImplementedException();
         }
+
+        public async Task<MsgInformationResponse> UpdateKeyAsync(string url, HeadersRq headers, UpdateKeyPersonRq requestBody)
+        {
+            try
+            {
+                MsgInformationResponse responseRedeban = new MsgInformationResponse();
+
+                
+                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);
+                
+                Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
+                
+                Console.WriteLine($"[INFO] Iniciando solicitud PATCH Update key a: {url}");
+
+                ClearHeaders();
+
+                redMapper.AddUpdateHeaders(_httpClient, headers, responseOauth.accessToken);
+
+                string jsonContent = UtilCommons.Object2String(requestBody);
+
+                Console.WriteLine($"[DEBUG] JSON a enviar: {jsonContent}");
+
+                var content = new StringContent(jsonContent, Encoding.UTF8, ConstantsEnum.APPLICATION_JSON.getValue());
+
+                string contentBody = await content.ReadAsStringAsync();
+
+                Console.WriteLine("[INFO] Enviando solicitud PATCH...");
+
+                HttpResponseMessage response = await _httpClient.PatchAsync(url, content);
+
+                Console.WriteLine($"[INFO] Respuesta recibida con código: {response.StatusCode}");
+                
+                string responseRes = await response.Content.ReadAsStringAsync();
+
+                responseRedeban = UtilCommons.String2Object<MsgInformationResponse>(responseRes);
+
+                Console.WriteLine($"[RES] Respuesta: {responseRes}");
+
+                return responseRedeban;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"[ERROR] Error de solicitud HTTP: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"[ERROR] Inner Exception: {ex.InnerException.Message}");
+                }
+                throw; // Re-lanzamos la excepción para que la función Lambda la maneje
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"[ERROR] Error al procesar JSON: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Error inesperado: {ex.Message}");
+                Console.WriteLine($"[ERROR] Stack Trace: {ex.StackTrace}");
+                throw;
+            }
+
+            throw new NotImplementedException();
+        }
         /// <summary>
         /// Limpia todas las cabeceras HTTP predeterminadas del cliente HTTP.
         /// </summary>
