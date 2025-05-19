@@ -16,7 +16,7 @@ namespace SPI_Update_Service.Utils.util
         public string BuildUriAccount(string valueKey, string valueType)
         {
 
-            string baseUri = ConstantsEnum.BASE_URI_ACCOUNT.getValue();
+            string baseUri = Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_ACCOUNT.getValue());
             string newUrl = getValuePathParameters(baseUri, ConstantsEnum.KEY_TYPE_PATH.getValue(), valueType);
 
             newUrl = getValuePathParameters(newUrl, ConstantsEnum.KEY_VALUE_PATH.getValue(), valueKey);
@@ -26,7 +26,7 @@ namespace SPI_Update_Service.Utils.util
 
         public string BuildUriKey(string id)
         {
-            string baseUri = ConstantsEnum.BASE_URI_KEY.getValue();
+            string baseUri = Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_KEY.getValue());
             string newUrl = getValuePathParameters(baseUri, ConstantsEnum.KEY_ID_PATH.getValue(), id);
             return newUrl;
         }

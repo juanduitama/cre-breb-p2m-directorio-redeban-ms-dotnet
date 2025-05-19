@@ -59,7 +59,7 @@ namespace SPI_Update_Service.Proxy.update
 
                 ClearHeaders();
 
-                RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);
+                RsOAuth responseOauth = await _oauthService.getToken(Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_OAUTH.getValue()), _httpClient);
 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
 

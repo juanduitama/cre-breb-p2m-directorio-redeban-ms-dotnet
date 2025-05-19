@@ -58,10 +58,8 @@ namespace SPI_Update_Service.Utils.mapper
         public void addOauthHeaders(HttpClient request)
         {
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE.getValue(), ConstantsEnum.APPLICATION_URL_ENCODE.getValue());
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID.getValue()));
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret.getValue()));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), "54cfb091cdd1c1f30f9cb3423a28aebe");
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), "c92296aaeeb1965330c077e1a8f73889");
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID.getValue()));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret.getValue()));
         }
 
 
