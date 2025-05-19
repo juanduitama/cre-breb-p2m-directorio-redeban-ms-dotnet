@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using SPI_Update_Service.Domain.models.redeban;
 
 namespace domain.models.redeban
 {
@@ -12,9 +13,10 @@ namespace domain.models.redeban
         [JsonPropertyName("Type")]
         public string? type { get; set; }
 
-
-
-
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        [Required]
+        [JsonPropertyName("Person")]
+        public Person? person { get; set; }
 
     }
 }

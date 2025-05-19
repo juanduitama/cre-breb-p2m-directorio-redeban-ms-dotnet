@@ -52,6 +52,13 @@ namespace SPI_Update_Service.Utils
             {
                 throw new SerfiException(ResponseServiceEnum.INVALID_DT_MODIFY.getErrorCode(), ResponseServiceEnum.INVALID_DT_MODIFY.getMessage(), ResponseServiceEnum.INVALID_DT_MODIFY.getHttpCode());
             }
+            else if (updateAccount.reqBPatchAccount.custInfo.custContact != null)
+            {
+                if (!validateCelNumber(updateAccount.reqBPatchAccount.custInfo.custContact.custMobileNumber))
+                {
+                    throw new SerfiException(ResponseServiceEnum.INVALID_CEL_NUMBER.getErrorCode(), ResponseServiceEnum.INVALID_CEL_NUMBER.getMessage(), ResponseServiceEnum.INVALID_CEL_NUMBER.getHttpCode());
+                }
+            }
 
             Console.WriteLine("validacion Exitosa Account Update");
             return true;
@@ -114,11 +121,42 @@ namespace SPI_Update_Service.Utils
         }
         public bool validateCustType(CustInfo custInfo)
         {
-            if (custInfo.custType.Equals(ValidationEnums.CUST_INFO_LEGAL_NAME_PJ))
+            if (custInfo.custType.Equals(ValidationEnums.CUST_INFO_LEGAL_NAME_PN))
             {
-                return true;
+                if (string.IsNullOrEmpty(custInfo.firstName)
+                || !validateRegex(custInfo.firstName, ValidationEnums.CUST_INFO_NAMES)
+                || !validateSize(custInfo.firstName, ValidationEnums.CUST_INFO_SIZE_40))
+                {
+                    throw new SerfiException(ResponseServiceEnum.INVALID_FIRST_NAME.getErrorCode(), ResponseServiceEnum.INVALID_FIRST_NAME.getMessage(), ResponseServiceEnum.INVALID_FIRST_NAME.getHttpCode());
+                }
+                else if (!string.IsNullOrEmpty(custInfo.secondName))
+                {
+                    if (!validateRegex(custInfo.secondName, ValidationEnums.CUST_INFO_NAMES)
+                        || !validateSize(custInfo.secondName, ValidationEnums.CUST_INFO_SIZE_40))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_SECOND_NAME.getErrorCode(), ResponseServiceEnum.INVALID_SECOND_NAME.getMessage(), ResponseServiceEnum.INVALID_SECOND_NAME.getHttpCode());
+                    }
+                }
+                else if (string.IsNullOrEmpty(custInfo.lastName)
+                    || !validateRegex(custInfo.lastName, ValidationEnums.CUST_INFO_NAMES)
+                    || !validateSize(custInfo.lastName, ValidationEnums.CUST_INFO_SIZE_40))
+                {
+                    throw new SerfiException(ResponseServiceEnum.INVALID_LAST_NAME.getErrorCode(), ResponseServiceEnum.INVALID_LAST_NAME.getMessage(), ResponseServiceEnum.INVALID_LAST_NAME.getHttpCode());
+                }
+                else if (!string.IsNullOrEmpty(custInfo.secondLastName))
+                {
+                    if (!validateRegex(custInfo.secondLastName, ValidationEnums.CUST_INFO_NAMES)
+                        || !validateSize(custInfo.secondLastName, ValidationEnums.CUST_INFO_SIZE_40))
+                    {
+                        throw new SerfiException(ResponseServiceEnum.INVALID_SECOND_LAST_NAME.getErrorCode(), ResponseServiceEnum.INVALID_SECOND_LAST_NAME.getMessage(), ResponseServiceEnum.INVALID_SECOND_LAST_NAME.getHttpCode());
+                    }
+                }
             }
-            return false;
+            else if ((custInfo.custType.Equals(ValidationEnums.CUST_INFO_LEGAL_NAME_PJ)))
+            {
+                 
+            }
+            return true;
         }
 
         public bool validateKeyType(string keyType, string keyId)
@@ -225,6 +263,15 @@ namespace SPI_Update_Service.Utils
             return DateTime.SpecifyKind(date, DateTimeKind.Utc)
                 .ToString(ValidationEnums.DATE_FORMAT)
                 .EndsWith("Z");
+        }
+
+        public bool validateCelNumber(string number)
+        {
+            if (!validateRegex(number, ValidationEnums.KEY_ID_CEL))
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool validateRegex(string value, string regex)

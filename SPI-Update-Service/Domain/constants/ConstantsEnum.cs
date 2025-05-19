@@ -32,6 +32,8 @@ namespace domain.constants
         BASE_URI_ACCOUNT,
         KEY_VALUE_PATH,
         KEY_TYPE_PATH,
+
+        COUNTRY_CODE,
     }
 
         public static class ConstantsEnumExtensions
@@ -58,6 +60,7 @@ namespace domain.constants
                     ConstantsEnum.BASE_URI_ACCOUNT => "https://gateway.qa.sandboxhubredeban.com/rbmcalidad/calidad/api/dir/v3.0.0/Directory/keytype/" + ConstantsEnum.KEY_TYPE_PATH.getValue() + "/key/" + ConstantsEnum.KEY_VALUE_PATH.getValue(),
                     ConstantsEnum.KEY_VALUE_PATH => "{keyValue}",
                     ConstantsEnum.KEY_TYPE_PATH => "{keyType}",
+                    ConstantsEnum.COUNTRY_CODE => "+57",
                     _ => throw new ArgumentOutOfRangeException(nameof(constantsEnum))
                 };
             }

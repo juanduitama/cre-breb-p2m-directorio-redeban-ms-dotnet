@@ -20,7 +20,8 @@ namespace domain.constants
         ORIGIN,
         X_IBM_CLIENT_ID,
         X_IBM_CLIENT_SECRET,
-     }
+        AUTHORIZATION,
+    }
 
      public static class RedHeadersEnumExtensions
      {
@@ -38,6 +39,7 @@ namespace domain.constants
             RedHeadersEnum.ORIGIN => "Origin",
             RedHeadersEnum.X_IBM_CLIENT_ID => "X-IBM-Client-Id",
             RedHeadersEnum.X_IBM_CLIENT_SECRET => "X-IBM-Client-Secret",
+            RedHeadersEnum.AUTHORIZATION => "Authorization",
 
             _ => throw new ArgumentOutOfRangeException(nameof(redHeadersEnum))
         };

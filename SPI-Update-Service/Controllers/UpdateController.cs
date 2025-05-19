@@ -87,12 +87,10 @@ namespace SPI_Update_Service.Controllers
 
                 //string apiUri = "https://b893c53b-3fb1-43b9-b7c2-4a85801e0e88.mock.pstmn.io/AccountUpdate";
 
-                Console.WriteLine($"URL completa: {apiUri}");
-
                 // Obtener headers de la solicitud
                 HeadersRq headersRq = _redRqMapper.MapHeadersFromRequest(request.updateHeaders);
 
-                UpdateAcctRq updateBody = _redRqMapper.MapBodyAccountFromRequest(request.reqBPatchAccount);
+                UpdateAcctRq updateBody = _redRqMapper.MapBodyAccountFromRequest(request.reqBPatchAccount, request.updateHeaders);
 
                 // Llamar al servicio
                 responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody);

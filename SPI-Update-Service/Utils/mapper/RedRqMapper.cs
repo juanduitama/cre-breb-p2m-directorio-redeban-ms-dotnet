@@ -5,6 +5,7 @@ using domain.models.redeban;
 using SPI_Update_Service.domain.models.redeban;
 using domain.models.oAuth;
 using Microsoft.VisualBasic;
+using SPI_Update_Service.Domain.models.redeban;
 
 namespace SPI_Update_Service.Utils.mapper
 {
@@ -31,16 +32,16 @@ namespace SPI_Update_Service.Utils.mapper
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR.getValue(), headers.XForwardedFor);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID.getValue(), Guid.NewGuid().ToString("D"));
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN.getValue(), ConstantsEnum.ORIGIN.getValue());
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.AUTHORIZATION.getValue(), ConstantsEnum.BEARER.getValue() + " " + token.Trim());
             Console.WriteLine("Estos son los headers para http: " + request.DefaultRequestHeaders.ToString());
 
         }
 
-        //Cabeceras de OS a Redeban
         public HeadersRq MapHeadersFromRequest(UpdateHeaders headersRq)
         {
             HeadersRq headersRed = new HeadersRq();
 
-            string newDate = headersRq.timeStamps.Replace("Z", "");
+            string newDate = DateTime.Now.ToString(ValidationEnums.DATE_FORMAT).Replace("Z", ""); 
 
             headersRed.Date = newDate;
             headersRed.ContentType = ConstantsEnum.APPLICATION_JSON.getValue();
@@ -57,8 +58,10 @@ namespace SPI_Update_Service.Utils.mapper
         public void addOauthHeaders(HttpClient request)
         {
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.CONTENT_TYPE.getValue(), ConstantsEnum.APPLICATION_URL_ENCODE.getValue());
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID.getValue()));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret.getValue()));
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID.getValue()));
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_ClientSecret.getValue()));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_ID.getValue(), "54cfb091cdd1c1f30f9cb3423a28aebe");
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_IBM_CLIENT_SECRET.getValue(), "c92296aaeeb1965330c077e1a8f73889");
         }
 
 
@@ -70,17 +73,34 @@ namespace SPI_Update_Service.Utils.mapper
             return rqOauth;
         }
 
-        public UpdateAcctRq MapBodyAccountFromRequest(ReqBPatchAccount reqBPatchAccount)
+        public UpdateAcctRq MapBodyAccountFromRequest(ReqBPatchAccount reqBPatchAccount, UpdateHeaders headersRq)
         {
             UpdateAcctRq bodyRed = new UpdateAcctRq();
 
-
-            bodyRed.requestDateTime = DateTime.Now.ToString(ValidationEnums.DATE_FORMAT);
+            bodyRed.requestDateTime = headersRq.timeStamps;
 
             Customer customer = new Customer();
             customer.type = reqBPatchAccount.custInfo.custType;
 
             bodyRed.customer = customer;
+
+            if (reqBPatchAccount.custInfo.custType.Equals(ValidationEnums.CUST_INFO_LEGAL_NAME_PN)) {
+                Person person = new Person();
+                person.firstName = reqBPatchAccount.custInfo.firstName;
+                person.middleName = reqBPatchAccount.custInfo.secondName;
+                person.firstSurName = reqBPatchAccount.custInfo.lastName;
+                person.middleSurName = reqBPatchAccount.custInfo.secondLastName;
+
+                PersonContact contact = new PersonContact();
+                contact.mobileNumber = ConstantsEnum.COUNTRY_CODE.getValue()+ reqBPatchAccount.custInfo.custContact.custMobileNumber;
+
+                person.personContact = contact;
+
+                person.documentType = reqBPatchAccount.custInfo.custIdent.custIdentType;
+                person.documentNumber = reqBPatchAccount.custInfo.custIdent.custIdentId;
+
+                bodyRed.customer.person = person;
+            }
 
             Account account = new Account();
 
@@ -88,8 +108,8 @@ namespace SPI_Update_Service.Utils.mapper
             //account.accountNo = reqBPatchAccount.acctInfo.newAcctId != null ? reqBPatchAccount.acctInfo.newAcctId : osOldDefinitive.acctInfo.acctId;
             //account.ageAccount = reqBPatchAccount.acctInfo.ageAccount != null ? reqBPatchAccount.acctInfo.ageAccount : osOldDefinitive.acctInfo.ageAccount;
 
-            account.typeAccount = reqBPatchAccount.acctInfo.newAcctType != null ? reqBPatchAccount.acctInfo.newAcctType : reqBPatchAccount.acctInfo.oldAcctType;
-            account.accountNo = reqBPatchAccount.acctInfo.newAcctId != null ? reqBPatchAccount.acctInfo.newAcctId : reqBPatchAccount.acctInfo.oldAcctId;
+            account.typeAccount = reqBPatchAccount.acctInfo.newAcctType;
+            account.accountNo = reqBPatchAccount.acctInfo.newAcctId;
             account.ageAccount = reqBPatchAccount.acctInfo.ageAccount;
 
             Product product = new Product();
