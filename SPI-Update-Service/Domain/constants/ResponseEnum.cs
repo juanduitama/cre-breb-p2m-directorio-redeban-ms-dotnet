@@ -9,9 +9,9 @@ namespace domain.constants
 
     public enum ResponseEnun
     {
-        ENRROLLMENT_RESPONSE_CODE_SUCCESS,
-        ENRROLLMENT_RESPONSE_DESC_SUCCESS,
-
+        UPDATE_RESPONSE_CODE_SUCCESS,
+        UPDATE_RESPONSE_DESC_SUCCESS_PRODUCT,
+        UPDATE_RESPONSE_DESC_SUCCESS_KEY
     }
     public static class ResponseEnunExtensions
     {
@@ -20,8 +20,9 @@ namespace domain.constants
         {
             return responseEnum switch
             {
-                ResponseEnun.ENRROLLMENT_RESPONSE_CODE_SUCCESS => "201",
-                ResponseEnun.ENRROLLMENT_RESPONSE_DESC_SUCCESS => "La llave se modificó exitosamente",
+                ResponseEnun.UPDATE_RESPONSE_CODE_SUCCESS => "201",
+                ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_PRODUCT => "El producto se modificó exitosamente",
+                ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_KEY => "La llave se modificó exitosamente",
 
                 _ => throw new ArgumentOutOfRangeException(nameof(responseEnum))
             };

@@ -118,7 +118,7 @@ namespace SPI_Update_Service.Controllers
 
 
                 //MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapMessageResponseAccount(entityToSave, request, response);
-                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapMessageResponseAccount(request, responseRedeban);
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapMessageResponseAccount(request, responseRedeban.messageInformation);
 
 
                 Console.WriteLine("Finalizo el proceso");

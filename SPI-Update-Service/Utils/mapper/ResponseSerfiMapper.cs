@@ -4,27 +4,27 @@ using domain.constants;
 using domain.models;
 using domain.models.enrollment;
 using domain.models.redeban.response;
+using Amazon.Runtime.Internal;
 
 namespace SPI_Update_Service.Utils.mapper
 {
     public class ResponseSerfiMapper
     {
-        public MsgInformationResponseSerfi mapMessageResponseAccount(UpdateAccountRq updateKey, MsgInformationResponse messageInformation)
+        public MsgInformationResponseSerfi mapMessageResponseAccount(UpdateAccountRq updateKey, MessageInformation messageInformation)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
             meta.uuid = updateKey.updateHeaders.uuId;
-            meta.timeStamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            meta.timeStamp = DateTime.Now.ToString(ValidationEnums.DATE_FORMAT).Replace("Z", "");
             meta.systemId = "";
             msgInformationResponseSerfi.meta = meta;
 
-            msgInformationResponseSerfi.statusCodigo = messageInformation.messageInformation.msgCode;
-            msgInformationResponseSerfi.statusDesc = messageInformation.messageInformation.msgDescription;
+            msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_RESPONSE_CODE_SUCCESS.getValue();
+            msgInformationResponseSerfi.statusDesc = ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_KEY.getValue();
 
             AditionalInfo aditionalInfoItem = new AditionalInfo();
-            aditionalInfoItem.codigo = "";
-            aditionalInfoItem.detalle = "";
-
+            aditionalInfoItem.codigo = messageInformation.msgCode;
+            aditionalInfoItem.detalle = messageInformation.msgDescription;
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
             aditionalInfoList.Add(aditionalInfoItem);
@@ -46,16 +46,16 @@ namespace SPI_Update_Service.Utils.mapper
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
             meta.uuid = updateKey.updateHeaders.uuId;
-            meta.timeStamp = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
-            meta.systemId = "";
+            meta.timeStamp = updateKey.updateHeaders.timeStamps;
+            meta.systemId = updateKey.updateHeaders.systemId;
             msgInformationResponseSerfi.meta = meta;
 
-            msgInformationResponseSerfi.statusCodigo = messageInformation.msgCode;
-            msgInformationResponseSerfi.statusDesc = messageInformation.msgDescription;
+            msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_RESPONSE_CODE_SUCCESS.getValue();
+            msgInformationResponseSerfi.statusDesc = ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_KEY.getValue();
 
             AditionalInfo aditionalInfoItem = new AditionalInfo();
-            aditionalInfoItem.codigo = "";
-            aditionalInfoItem.detalle = "";
+            aditionalInfoItem.codigo = messageInformation.msgCode;
+            aditionalInfoItem.detalle = messageInformation.msgDescription;
 
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
@@ -65,7 +65,6 @@ namespace SPI_Update_Service.Utils.mapper
 
 
             Data data = new Data();
-            //No siempre se llena este merchantId
             data.merchantId = "";
             msgInformationResponseSerfi.data = data;
 

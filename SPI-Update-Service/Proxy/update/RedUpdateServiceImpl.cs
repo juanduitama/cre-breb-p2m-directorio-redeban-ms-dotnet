@@ -139,8 +139,6 @@ namespace SPI_Update_Service.Proxy.update
                 Console.WriteLine("[INFO] Enviando solicitud PATCH...");
 
                 HttpResponseMessage response = await _httpClient.PatchAsync(url, content);
-
-                Console.WriteLine($"[INFO] Respuesta recibida con código: {response.StatusCode}");
                 
                 string responseRes = await response.Content.ReadAsStringAsync();
 
