@@ -47,7 +47,7 @@ namespace SPI_Update_Service.Utils.mapper
             headersRed.ContentType = ConstantsEnum.APPLICATION_JSON.getValue();
             headersRed.Accept = ConstantsEnum.APPLICATION_JSON.getValue();
             headersRed.Origin = RedHeadersEnum.ORIGIN.getValue();
-            headersRed.XForwardedFor = ConstantsEnum.IP_ORIGIN.getValue();
+            headersRed.XForwardedFor = headersRq.ipOrigin;
             headersRed.XRequestId = headersRq.uuId;
             headersRed.RBMFrom = ConstantsEnum.RBM_FROM.getValue();
 
