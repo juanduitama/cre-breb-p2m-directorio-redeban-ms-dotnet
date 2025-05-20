@@ -37,8 +37,7 @@ namespace SPI_Update_Service.Controllers
         }
 
         [HttpPatch("account")]
-        public async Task<IActionResult> UpdateAccount([Required][FromHeader(Name = HeadersSerfiEnum.API_KEY)] string apiKeyHeader,
-                                                       [Required][FromHeader(Name = HeadersSerfiEnum.AUTHENTICATION)] string authHeader,
+        public async Task<IActionResult> UpdateAccount([Required][FromHeader(Name = HeadersSerfiEnum.IPORIGIN)] string ipOrigin,
                                                        [Required][FromHeader(Name = HeadersSerfiEnum.UUID)] string uuidHeader,
                                                        [Required][FromHeader(Name = HeadersSerfiEnum.TIMESTAMPS)] string timestampsHeader,
                                                        [Required][FromHeader(Name = HeadersSerfiEnum.SYSTEMID)] string systemIdHeader,
@@ -57,23 +56,21 @@ namespace SPI_Update_Service.Controllers
 
 
             UpdateAccountRq request = new UpdateAccountRq();
-            request.updateHeaders = _headersMapper.mapHeaders(apiKeyHeader, authHeader, uuidHeader, timestampsHeader, systemIdHeader);
+            request.updateHeaders = _headersMapper.mapHeaders(ipOrigin, uuidHeader, timestampsHeader, systemIdHeader);
             string headers = UtilCommons.Object2String(request.updateHeaders);
             Console.WriteLine("headers: " + headers);
 
             request.reqBPatchAccount = body;
             string body1 = UtilCommons.Object2String(request.reqBPatchAccount);
             Console.WriteLine("body: " + body1);
+            MsgInformationResponse responseRedeban = null;
 
             try
             {
                 Console.WriteLine("Iniciando proceso de actualización de cuenta");
 
-                MsgInformationResponse responseRedeban;
-
+                validateService.ValidateHeaders(request.updateHeaders);
                 validateService.ValidateServiceUpdateAccountModel(request);
-
-                Console.WriteLine("Termino el proceso de validacion");
 
                 //Buscamos llave
                 //OSDefinitive opSearchOldEntity = await _openSearchService.SearchKey(request.reqBPatchAccount.key.keyType, request.reqBPatchAccount.key.keyId);
@@ -124,44 +121,23 @@ namespace SPI_Update_Service.Controllers
                 Console.WriteLine("Finalizo el proceso");
 
                 return Ok(responseService);
-                //return null;
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"Error al procesar JSON: {ex.Message}");
-
-                return BadRequest(new
-                {
-                    error = "Formato JSON inválido",
-                    message = ex.Message
-                });
             }
             catch (SerfiException ex)
             {
                 Console.WriteLine($"Error de serfinanzas: {ex.Message}");
-
-                return BadRequest(new
-                {
-                    code = ex.errorCode,
-                    error = ex.message
-                });
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadResponseSerfiAccount(request, responseRedeban.messageInformation, ex);
+                return BadRequest(responseService);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la inscripción: {ex.Message}");
-
-                return StatusCode(500, new
-                {
-                    error = "Error interno del servidor",
-                    message = ex.Message,
-                    timestamp = DateTime.UtcNow.ToString()
-                });
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadResponseGenericAccount(request, responseRedeban.messageInformation, ex);
+                return BadRequest(responseService);
             }
         }
 
         [HttpPatch("key")]
-        public async Task<IActionResult> UpdateKey([FromHeader(Name = HeadersSerfiEnum.API_KEY)] string apiKeyHeader,
-                                                   [FromHeader(Name = HeadersSerfiEnum.AUTHENTICATION)] string authHeader,
+        public async Task<IActionResult> UpdateKey([FromHeader(Name = HeadersSerfiEnum.IPORIGIN)] string ipOrigin,
                                                    [FromHeader(Name = HeadersSerfiEnum.UUID)] string uuidHeader,
                                                    [FromHeader(Name = HeadersSerfiEnum.TIMESTAMPS)] string timestampsHeader,
                                                    [FromHeader(Name = HeadersSerfiEnum.SYSTEMID)] string systemIdHeader,
@@ -169,7 +145,7 @@ namespace SPI_Update_Service.Controllers
         {
 
             UpdateKeyRq request = new UpdateKeyRq();
-            request.updateHeaders = _headersMapper.mapHeaders(apiKeyHeader, authHeader, uuidHeader, timestampsHeader, systemIdHeader);
+            request.updateHeaders = _headersMapper.mapHeaders(ipOrigin, uuidHeader, timestampsHeader, systemIdHeader);
             string headers = UtilCommons.Object2String(request.updateHeaders);
             Console.WriteLine("headers: " + headers);
 
@@ -177,11 +153,13 @@ namespace SPI_Update_Service.Controllers
             string body1 = UtilCommons.Object2String(request.reqBPatchKey);
             Console.WriteLine("body: " + body1);
 
+            MsgInformationResponse responseRedeban = null; 
+
 
             try
             {
                 Console.WriteLine("Iniciando proceso de actualización de llave");
-                MsgInformationResponse responseRedeban;
+                validateService.ValidateHeaders(request.updateHeaders);
                 validateService.ValidateServiceUpdateKeyModel(request);
 
                 string apiUri = _uriUtil.BuildUriKey(request.reqBPatchKey.custInfo.custIdent.custIdentId);
@@ -209,36 +187,17 @@ namespace SPI_Update_Service.Controllers
 
                 return Ok(responseService);
             }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"Error al procesar JSON: {ex.Message}");
-
-                return BadRequest(new
-                {
-                    error = "Formato JSON inválido",
-                    message = ex.Message
-                });
-            }
             catch (SerfiException ex)
             {
                 Console.WriteLine($"Error de serfinanzas: {ex.Message}");
-
-                return BadRequest(new
-                {
-                    code = ex.errorCode,
-                    error = ex.message
-                });
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadMessageSerfiResponseKey(request, responseRedeban.messageInformation, ex);
+                return BadRequest(responseService);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la inscripción: {ex.Message}");
-
-                return StatusCode(500, new
-                {
-                    error = "Error interno del servidor",
-                    message = ex.Message,
-                    timestamp = DateTime.UtcNow.ToString()
-                });
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadMessageGenericResponseKey(request, responseRedeban.messageInformation, ex);
+                return BadRequest(responseService);
             }
         }
     }

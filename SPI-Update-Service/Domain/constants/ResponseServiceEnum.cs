@@ -16,6 +16,10 @@ namespace domain.constants
         /// Constante de error en caso de que se presente un fallo al intentar operación sobre DynamoDB.
         /// </summary>
         NOT_FOUND_KEY,  
+        INVALID_IPORIGIN,
+        INVALID_UUID,
+        INVALID_TIMESTAMP,
+        INVALID_SYSTEMID,
         INVALID_ACCTYPE,
         INVALID_ACCTID,
         INVALID_OLD_ACCTYPE,
@@ -61,6 +65,10 @@ namespace domain.constants
             return responseService switch
             {
                 ResponseServiceEnum.NOT_FOUND_KEY => "206",
+                ResponseServiceEnum.INVALID_IPORIGIN => "400",
+                ResponseServiceEnum.INVALID_UUID => "400",
+                ResponseServiceEnum.INVALID_TIMESTAMP => "400",
+                ResponseServiceEnum.INVALID_SYSTEMID => "400",
                 ResponseServiceEnum.INVALID_ACCTYPE => "400",
                 ResponseServiceEnum.INVALID_ACCTID => "400",
                 ResponseServiceEnum.INVALID_OLD_ACCTYPE => "400",
@@ -80,8 +88,8 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_VAULT_NAME => "400",
                 ResponseServiceEnum.DIFFERENT_ID => "400",
                 ResponseServiceEnum.DIFFERENT_TYPE => "400",
-                ResponseServiceEnum.SERVICE_ACCOUNT_ERROR => "400",
-                ResponseServiceEnum.SERVICE_KEY_ERROR => "400",
+                ResponseServiceEnum.SERVICE_ACCOUNT_ERROR => "206",
+                ResponseServiceEnum.SERVICE_KEY_ERROR => "206",
                 ResponseServiceEnum.INVALID_FIRST_NAME => "400",
                 ResponseServiceEnum.INVALID_SECOND_NAME => "400",
                 ResponseServiceEnum.INVALID_LAST_NAME => "400",
@@ -101,6 +109,10 @@ namespace domain.constants
             return responseService switch
             {
                 ResponseServiceEnum.NOT_FOUND_KEY => "La llave que se quiere modificar no se encuentra registrada",
+                ResponseServiceEnum.INVALID_IPORIGIN => "[ipOrigin] no puede estar vacío",
+                ResponseServiceEnum.INVALID_UUID => "[uuid] no puede estar vacío",
+                ResponseServiceEnum.INVALID_TIMESTAMP => "[timeStamp] no cumple con el formato requerido yyyy-MM-dd'T'HH:mm:ss.fff",
+                ResponseServiceEnum.INVALID_SYSTEMID => "[systemId] no puede estar vacío",
                 ResponseServiceEnum.INVALID_ACCTYPE => "[AcctInfo.acctType] no corresponde a los tipos de cuenta permitidos.",
                 ResponseServiceEnum.INVALID_ACCTID => "[ActtInfo.acctId] no corresponde a los valores permitidos como número de cuenta.",
                 ResponseServiceEnum.INVALID_OLD_ACCTYPE => "[ActtInfo.oldAcctType] el tipo de cuenta antiguo no corresponde a los tipos de cuenta permitidos.",
@@ -141,6 +153,10 @@ namespace domain.constants
             return responseService switch
             {
                 ResponseServiceEnum.NOT_FOUND_KEY => 206,
+                ResponseServiceEnum.INVALID_IPORIGIN => 400,
+                ResponseServiceEnum.INVALID_UUID => 400,
+                ResponseServiceEnum.INVALID_TIMESTAMP => 400,
+                ResponseServiceEnum.INVALID_SYSTEMID => 400,
                 ResponseServiceEnum.INVALID_ACCTYPE => 400,
                 ResponseServiceEnum.INVALID_ACCTID => 400,
                 ResponseServiceEnum.INVALID_OLD_ACCTYPE => 400,

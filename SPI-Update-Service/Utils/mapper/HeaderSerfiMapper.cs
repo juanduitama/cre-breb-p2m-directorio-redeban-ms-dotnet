@@ -8,14 +8,13 @@ namespace SPI_Update_Service.Utils.mapper
     public class HeaderSerfiMapper
     {
 
-        public UpdateHeaders mapHeaders(string apiKey, string autentication, string uuId, string timeStamp, string systemId)
+        public UpdateHeaders mapHeaders(string ipOrigin, string uuId, string timeStamp, string systemId)
         {
             UpdateHeaders headers = new UpdateHeaders();
 
-            headers.apikey = apiKey;
-            headers.authentication = autentication;
+            headers.ipOrigin = ipOrigin;
             headers.uuId = uuId;
-            headers.timeStamps = timeStamp;
+            headers.timeStamp = timeStamp;
             headers.systemId = systemId;
 
             return headers;

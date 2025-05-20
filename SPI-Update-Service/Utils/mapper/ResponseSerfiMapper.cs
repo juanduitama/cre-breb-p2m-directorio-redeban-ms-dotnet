@@ -10,13 +10,13 @@ namespace SPI_Update_Service.Utils.mapper
 {
     public class ResponseSerfiMapper
     {
-        public MsgInformationResponseSerfi mapMessageResponseAccount(UpdateAccountRq updateKey, MessageInformation messageInformation)
+        public MsgInformationResponseSerfi mapMessageResponseAccount(UpdateAccountRq updateAccount, MessageInformation messageInformation)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
-            meta.uuid = updateKey.updateHeaders.uuId;
-            meta.timeStamp = DateTime.Now.ToString(ValidationEnums.DATE_FORMAT).Replace("Z", "");
-            meta.systemId = "";
+            meta.uuid = updateAccount.updateHeaders.uuId;
+            meta.timeStamp = updateAccount.updateHeaders.timeStamp;
+            meta.systemId = updateAccount.updateHeaders.systemId;
             msgInformationResponseSerfi.meta = meta;
 
             msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_RESPONSE_CODE_SUCCESS.getValue();
@@ -46,17 +46,21 @@ namespace SPI_Update_Service.Utils.mapper
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
             meta.uuid = updateKey.updateHeaders.uuId;
-            meta.timeStamp = updateKey.updateHeaders.timeStamps;
+            meta.timeStamp = updateKey.updateHeaders.timeStamp;
             meta.systemId = updateKey.updateHeaders.systemId;
             msgInformationResponseSerfi.meta = meta;
 
             msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_RESPONSE_CODE_SUCCESS.getValue();
             msgInformationResponseSerfi.statusDesc = ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_KEY.getValue();
 
-            AditionalInfo aditionalInfoItem = new AditionalInfo();
-            aditionalInfoItem.codigo = messageInformation.msgCode;
-            aditionalInfoItem.detalle = messageInformation.msgDescription;
 
+            AditionalInfo aditionalInfoItem = new AditionalInfo();
+
+            if (messageInformation != null)
+            {
+                aditionalInfoItem.codigo = messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.msgDescription;
+            }
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
             aditionalInfoList.Add(aditionalInfoItem);
@@ -65,6 +69,148 @@ namespace SPI_Update_Service.Utils.mapper
 
 
             Data data = new Data();
+            //No siempre se llena este merchantId
+            data.merchantId = "";
+            msgInformationResponseSerfi.data = data;
+
+
+            return msgInformationResponseSerfi;
+        }
+
+        public MsgInformationResponseSerfi mapBadResponseSerfiAccount(UpdateAccountRq updateAccount, MessageInformation messageInformation, SerfiException ex)
+        {
+            MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
+            Meta meta = new Meta();
+            meta.uuid = updateAccount.updateHeaders.uuId;
+            meta.timeStamp = updateAccount.updateHeaders.timeStamp;
+            meta.systemId = updateAccount.updateHeaders.systemId;
+            msgInformationResponseSerfi.meta = meta;
+
+            msgInformationResponseSerfi.statusCodigo = ex.errorCode;
+            msgInformationResponseSerfi.statusDesc = ex.message;
+
+
+            AditionalInfo aditionalInfoItem = new AditionalInfo();
+
+            if (messageInformation != null)
+            {
+                aditionalInfoItem.codigo = messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.msgDescription;
+            }
+
+            List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
+            aditionalInfoList.Add(aditionalInfoItem);
+
+            msgInformationResponseSerfi.aditionalInfo = aditionalInfoList;
+
+
+            Data data = new Data();
+            data.merchantId = "";
+            msgInformationResponseSerfi.data = data;
+
+
+            return msgInformationResponseSerfi;
+        }
+
+        public MsgInformationResponseSerfi mapBadResponseGenericAccount(UpdateAccountRq updateAccount, MessageInformation messageInformation, Exception ex)
+        {
+            MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
+            Meta meta = new Meta();
+            meta.uuid = updateAccount.updateHeaders.uuId;
+            meta.timeStamp = updateAccount.updateHeaders.timeStamp;
+            meta.systemId = updateAccount.updateHeaders.systemId;
+            msgInformationResponseSerfi.meta = meta;
+
+            msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
+            msgInformationResponseSerfi.statusDesc = ex.Message;
+
+
+            AditionalInfo aditionalInfoItem = new AditionalInfo();
+
+            if (messageInformation != null)
+            {
+                aditionalInfoItem.codigo = messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.msgDescription;
+            }
+
+            List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
+            aditionalInfoList.Add(aditionalInfoItem);
+
+            msgInformationResponseSerfi.aditionalInfo = aditionalInfoList;
+
+
+            Data data = new Data();
+            data.merchantId = "";
+            msgInformationResponseSerfi.data = data;
+
+            return msgInformationResponseSerfi;
+        }
+
+        public MsgInformationResponseSerfi mapBadMessageSerfiResponseKey(UpdateKeyRq updateKey, MessageInformation messageInformation, SerfiException ex)
+        {
+            MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
+            Meta meta = new Meta();
+            meta.uuid = updateKey.updateHeaders.uuId;
+            meta.timeStamp = updateKey.updateHeaders.timeStamp;
+            meta.systemId = updateKey.updateHeaders.systemId;
+            msgInformationResponseSerfi.meta = meta;
+
+            msgInformationResponseSerfi.statusCodigo = ex.errorCode;
+            msgInformationResponseSerfi.statusDesc = ex.message;
+
+
+            AditionalInfo aditionalInfoItem = new AditionalInfo();
+
+            if (messageInformation != null)
+            {
+                aditionalInfoItem.codigo = messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.msgDescription;
+            }
+
+            List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
+            aditionalInfoList.Add(aditionalInfoItem);
+
+            msgInformationResponseSerfi.aditionalInfo = aditionalInfoList;
+
+
+            Data data = new Data();
+            //No siempre se llena este merchantId
+            data.merchantId = "";
+            msgInformationResponseSerfi.data = data;
+
+
+            return msgInformationResponseSerfi;
+        }
+
+        public MsgInformationResponseSerfi mapBadMessageGenericResponseKey(UpdateKeyRq updateKey, MessageInformation messageInformation, Exception ex)
+        {
+            MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
+            Meta meta = new Meta();
+            meta.uuid = updateKey.updateHeaders.uuId;
+            meta.timeStamp = updateKey.updateHeaders.timeStamp;
+            meta.systemId = updateKey.updateHeaders.systemId;
+            msgInformationResponseSerfi.meta = meta;
+
+            msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
+            msgInformationResponseSerfi.statusDesc = ex.Message;
+
+
+            AditionalInfo aditionalInfoItem = new AditionalInfo();
+
+            if (messageInformation != null)
+            {
+                aditionalInfoItem.codigo = messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.msgDescription;
+            }
+
+            List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
+            aditionalInfoList.Add(aditionalInfoItem);
+
+            msgInformationResponseSerfi.aditionalInfo = aditionalInfoList;
+
+
+            Data data = new Data();
+            //No siempre se llena este merchantId
             data.merchantId = "";
             msgInformationResponseSerfi.data = data;
 

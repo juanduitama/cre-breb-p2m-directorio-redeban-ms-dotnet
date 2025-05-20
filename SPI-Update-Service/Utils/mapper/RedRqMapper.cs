@@ -75,7 +75,7 @@ namespace SPI_Update_Service.Utils.mapper
         {
             UpdateAcctRq bodyRed = new UpdateAcctRq();
 
-            bodyRed.requestDateTime = headersRq.timeStamps;
+            bodyRed.requestDateTime = headersRq.timeStamp;
 
             Customer customer = new Customer();
             customer.type = reqBPatchAccount.custInfo.custType;
@@ -125,7 +125,7 @@ namespace SPI_Update_Service.Utils.mapper
 
             UpdateKeyPersonRq bodyRed = new UpdateKeyPersonRq();
 
-            bodyRed.requestDateTime = request.updateHeaders.timeStamps;
+            bodyRed.requestDateTime = request.updateHeaders.timeStamp;
             bodyRed.partySystemIdentifier = request.reqBPatchKey.key.oldKeyType;
             bodyRed.partyIdentifier = request.reqBPatchKey.key.oldKeyId;
             bodyRed.newPartySystemIdentifier = request.reqBPatchKey.key.newKeyType;

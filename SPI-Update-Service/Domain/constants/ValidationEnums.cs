@@ -49,6 +49,6 @@
 
         public const string FLOW_SERVICES_CREATE = "creacionLinea";
 
-        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff'Z'";
+        public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff";
     }
 }

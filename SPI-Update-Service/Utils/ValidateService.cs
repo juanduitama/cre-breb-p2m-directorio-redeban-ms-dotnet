@@ -8,6 +8,23 @@ namespace SPI_Update_Service.Utils
 {
     public class ValidateService
     {
+        public bool ValidateHeaders(UpdateHeaders headers)
+        {
+            if (string.IsNullOrEmpty(headers.ipOrigin)) 
+            {
+                throw new SerfiException(ResponseServiceEnum.INVALID_IPORIGIN.getErrorCode(), ResponseServiceEnum.INVALID_IPORIGIN.getMessage(), ResponseServiceEnum.INVALID_IPORIGIN.getHttpCode());
+            }else if (string.IsNullOrEmpty(headers.uuId))
+            {
+                throw new SerfiException(ResponseServiceEnum.INVALID_UUID.getErrorCode(), ResponseServiceEnum.INVALID_UUID.getMessage(), ResponseServiceEnum.INVALID_UUID.getHttpCode());
+            }else if (!validateDateFormat(headers.timeStamp))
+            {
+                throw new SerfiException(ResponseServiceEnum.INVALID_TIMESTAMP.getErrorCode(), ResponseServiceEnum.INVALID_TIMESTAMP.getMessage(), ResponseServiceEnum.INVALID_TIMESTAMP.getHttpCode());
+            }else if (string.IsNullOrEmpty(headers.systemId))
+            {
+                throw new SerfiException(ResponseServiceEnum.INVALID_SYSTEMID.getErrorCode(), ResponseServiceEnum.INVALID_SYSTEMID.getMessage(), ResponseServiceEnum.INVALID_SYSTEMID.getHttpCode());
+            }
+            return true;
+        }
 
         public bool ValidateServiceUpdateAccountModel(UpdateAccountRq updateAccount)
         {
@@ -106,6 +123,8 @@ namespace SPI_Update_Service.Utils
             Console.WriteLine("validacion Exitosa Key Update");
             return true;
         }
+
+
 
         public bool validateAccountType(string accType)
         {
@@ -344,9 +363,25 @@ namespace SPI_Update_Service.Utils
 
         public bool validateDateFormat(DateTime date)
         {
-            return DateTime.SpecifyKind(date, DateTimeKind.Utc)
-                .ToString(ValidationEnums.DATE_FORMAT)
-                .EndsWith("Z");
+            try
+            {
+                string formattedDate = date.ToString(ValidationEnums.DATE_FORMAT);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool validateDateFormat(string dateString)
+        {
+            return DateTime.TryParseExact(
+                dateString,
+                ValidationEnums.DATE_FORMAT,
+                System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.None,
+                out _);
         }
 
         public bool validateCelNumber(string number)
