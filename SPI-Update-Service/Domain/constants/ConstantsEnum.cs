@@ -22,7 +22,11 @@ namespace domain.constants
         RBM_FROM,
         IBM_CLIENT_ID,
         IBM_ClientSecret,
+        BUCKET_NAME,
+        PATHS3,
+        PASSWORD_CERTIFICATE,
         CERTIFICATE,
+
         BEARER,
 
         SCOPES,
@@ -58,7 +62,12 @@ namespace domain.constants
                     ConstantsEnum.RBM_FROM => "d0573cdf-112f-4bda-ab35-d25363cf4092",
                     ConstantsEnum.IBM_CLIENT_ID => "IBM_CLIENT_ID",
                     ConstantsEnum.IBM_ClientSecret => "IBM_ClientSecret",
+
                     ConstantsEnum.CERTIFICATE => "CERTIFICATE",
+                    ConstantsEnum.BUCKET_NAME => "BUCKET_NAME",
+                    ConstantsEnum.PATHS3 => "PATHS3",
+                    ConstantsEnum.PASSWORD_CERTIFICATE => "PASSWORD_CERTIFICATE",
+
                     ConstantsEnum.BEARER => "Bearer",
                     ConstantsEnum.SCOPES => "HUB",
                     ConstantsEnum.GRANTYPE => "client_credentials",

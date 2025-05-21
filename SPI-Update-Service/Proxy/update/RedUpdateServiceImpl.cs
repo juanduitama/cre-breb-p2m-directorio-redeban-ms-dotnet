@@ -20,14 +20,12 @@ namespace SPI_Update_Service.Proxy.update
         /// <summary>
         /// Cliente HTTP estático compartido para todas las instancias del servicio.
         /// </summary>
-        private readonly HttpClient _httpClient;
-
+        private HttpClient _httpClient;
+        
         /// <summary>
         /// Utilidad para construir y configurar instancias de HttpClient.
         /// </summary>
         private readonly BuilderHttpUtil _BuilderHttpUtil;
-
-        private readonly JsonSerializerOptions _jsonOptions;
         private readonly RedRqMapper redMapper;
 
         private readonly IOauthServices _oauthService = new OAuthService();
@@ -39,13 +37,7 @@ namespace SPI_Update_Service.Proxy.update
         public RedUpdateServiceImpl()
         {
             _BuilderHttpUtil = new BuilderHttpUtil();
-            _httpClient = _BuilderHttpUtil.BuildClientWithServerCertificate();
 
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true
-            };
             redMapper = new RedRqMapper();
 
         }
@@ -57,14 +49,16 @@ namespace SPI_Update_Service.Proxy.update
 
                 MsgInformationResponse responseRedeban = new MsgInformationResponse();
 
-                ClearHeaders();
+                _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate();
+
+                _httpClient.DefaultRequestHeaders.Clear();
 
                 RsOAuth responseOauth = await _oauthService.getToken(Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_OAUTH.getValue()), _httpClient);
 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
 
                 Console.WriteLine($"[INFO] Iniciando solicitud PATCH Update account a: {url}");
-                ClearHeaders();
+                _httpClient.DefaultRequestHeaders.Clear();
 
                 redMapper.AddUpdateHeaders(_httpClient, headers, responseOauth.accessToken);
 
@@ -108,7 +102,6 @@ namespace SPI_Update_Service.Proxy.update
                 Console.WriteLine($"[ERROR] Stack Trace: {ex.StackTrace}");
                 throw;
             }
-            throw new NotImplementedException();
         }
 
         public async Task<MsgInformationResponse> UpdateKeyAsync(string url, HeadersRq headers, UpdateKeyPersonRq requestBody)
@@ -117,14 +110,16 @@ namespace SPI_Update_Service.Proxy.update
             {
                 MsgInformationResponse responseRedeban = new MsgInformationResponse();
 
-                
+                _httpClient = _BuilderHttpUtil.BuildClientWithServerCertificate();
+
+                _httpClient.DefaultRequestHeaders.Clear();
                 RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);
                 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
                 
                 Console.WriteLine($"[INFO] Iniciando solicitud PATCH Update key a: {url}");
 
-                ClearHeaders();
+                _httpClient.DefaultRequestHeaders.Clear();
 
                 redMapper.AddUpdateHeaders(_httpClient, headers, responseOauth.accessToken);
 
@@ -168,19 +163,6 @@ namespace SPI_Update_Service.Proxy.update
                 Console.WriteLine($"[ERROR] Stack Trace: {ex.StackTrace}");
                 throw;
             }
-
-            throw new NotImplementedException();
-        }
-        /// <summary>
-        /// Limpia todas las cabeceras HTTP predeterminadas del cliente HTTP.
-        /// </summary>
-        /// <remarks>
-        /// Este método se utiliza para evitar la acumulación de cabeceras duplicadas
-        /// entre llamadas consecutivas utilizando el mismo cliente HTTP.
-        /// </remarks>
-        private void ClearHeaders()
-        {
-            _httpClient.DefaultRequestHeaders.Clear();
         }
     }
 }

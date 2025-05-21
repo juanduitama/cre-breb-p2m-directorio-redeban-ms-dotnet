@@ -77,7 +77,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadResponseSerfiAccount(UpdateAccountRq updateAccount, MessageInformation messageInformation, SerfiException ex)
+        public MsgInformationResponseSerfi mapBadResponseSerfiAccount(UpdateAccountRq updateAccount, MsgInformationResponse messageInformation, SerfiException ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -94,8 +94,8 @@ namespace SPI_Update_Service.Utils.mapper
 
             if (messageInformation != null)
             {
-                aditionalInfoItem.codigo = messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.msgDescription;
+                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
             }
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
@@ -112,7 +112,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadResponseGenericAccount(UpdateAccountRq updateAccount, MessageInformation messageInformation, Exception ex)
+        public MsgInformationResponseSerfi mapBadResponseGenericAccount(UpdateAccountRq updateAccount, MsgInformationResponse messageInformation, Exception ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -129,8 +129,8 @@ namespace SPI_Update_Service.Utils.mapper
 
             if (messageInformation != null)
             {
-                aditionalInfoItem.codigo = messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.msgDescription;
+                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
             }
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
@@ -146,7 +146,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadMessageSerfiResponseKey(UpdateKeyRq updateKey, MessageInformation messageInformation, SerfiException ex)
+        public MsgInformationResponseSerfi mapBadMessageSerfiResponseKey(UpdateKeyRq updateKey, MsgInformationResponse messageInformation, SerfiException ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -163,8 +163,8 @@ namespace SPI_Update_Service.Utils.mapper
 
             if (messageInformation != null)
             {
-                aditionalInfoItem.codigo = messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.msgDescription;
+                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
             }
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
@@ -182,7 +182,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadMessageGenericResponseKey(UpdateKeyRq updateKey, MessageInformation messageInformation, Exception ex)
+        public MsgInformationResponseSerfi mapBadMessageGenericResponseKey(UpdateKeyRq updateKey, MsgInformationResponse messageInformation, Exception ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -199,8 +199,8 @@ namespace SPI_Update_Service.Utils.mapper
 
             if (messageInformation != null)
             {
-                aditionalInfoItem.codigo = messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.msgDescription;
+                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
+                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
             }
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();

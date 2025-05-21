@@ -30,7 +30,7 @@ namespace SPI_Update_Service.Utils.mapper
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.RBM_FROM.getValue(), headers.RBMFrom);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ACCEPT.getValue(), headers.Accept);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_FORWARDED_FOR.getValue(), headers.XForwardedFor);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID.getValue(), Guid.NewGuid().ToString("D"));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.X_REQUEST_ID.getValue(), headers.XRequestId);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.ORIGIN.getValue(), ConstantsEnum.ORIGIN.getValue());
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnum.AUTHORIZATION.getValue(), ConstantsEnum.BEARER.getValue() + " " + token.Trim());
             Console.WriteLine("Estos son los headers para http: " + request.DefaultRequestHeaders.ToString());
