@@ -66,6 +66,7 @@ namespace SPI_Cancellation_Service.Proxy.cancellation
 
                 ClearHeaders();
 
+                //RsOAuth responseOauth = await _oauthService.getToken(Environment.GetEnvironmentVariable(ConstantsEnums.BASE_URI_OAUTH.getValue()), _httpClient);
                 RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnums.BASE_URI_OAUTH.getValue(), _httpClient);
 
                 Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);

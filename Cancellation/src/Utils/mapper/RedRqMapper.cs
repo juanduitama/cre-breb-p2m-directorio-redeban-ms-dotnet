@@ -28,9 +28,9 @@ namespace SPI_Cancellation_Service.Utils.mapper
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.RBM_FROM.getKeyHeader(), headers.RBMFrom);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.ACCEPT.getKeyHeader(), headers.Accept);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_FORWARDED_FOR.getKeyHeader(), headers.XForwardedFor);
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_REQUEST_ID.getKeyHeader(), Guid.NewGuid().ToString("D"));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_REQUEST_ID.getKeyHeader(), headers.XRequestId);
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.ORIGIN.getKeyHeader(), ConstantsEnums.ORIGIN.getValue());
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.RQ_ID.getKeyHeader(), random.NextInt64(100000000000, 999999999999).ToString());
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.RQ_ID.getKeyHeader(), random.NextInt64(100000000000, 999999999999).ToString());
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.AUTHORIZATION.getKeyHeader(), ConstantsEnums.BEARER.getValue() + " " + token.Trim());
             Console.WriteLine("Estos son los headers para http");
 
@@ -48,29 +48,33 @@ namespace SPI_Cancellation_Service.Utils.mapper
             headersRed.ContentType = ConstantsEnums.APPLICATION_JSON.getValue();
             headersRed.Accept = ConstantsEnums.APPLICATION_JSON.getValue();
             headersRed.Origin = RedHeadersEnums.ORIGIN.getKeyHeader();
-            headersRed.XForwardedFor = ConstantsEnums.IP_ORIGIN.getValue();
+            headersRed.XForwardedFor = headersRq.ipOrigin;
             headersRed.XRequestId = headersRq.uuId;
             headersRed.RBMFrom = ConstantsEnums.RBM_FROM.getValue();
 
             return headersRed;
 
         }
-        
-        public  DeleteRq MapBodyFromRequest(ReqBPutKey body, OSDefinitive osEntity) 
+        public DeleteRq MapBodyFromRequest(ReqBPutKey body, DeleteHeaders deleteHeaders)
         {
             DeleteRq bodyRed = new DeleteRq();
 
-          string newDate = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fff");
+            //string newDate = DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fff");
 
-          bodyRed.requestDateTime = newDate;
-          bodyRed.keyStatus = body.key.keyStatus;
-          //bodyRed.documentType = osEntity.custInfoOS.custIdent.custIdentType;
-          bodyRed.documentType = "NIT";
-          //bodyRed.documentNumber = osEntity.custInfoOS.custIdent.custIdentId;
-          bodyRed.documentNumber = "123456789";
-          bodyRed.merchantId = "0012345678";
+            bodyRed.requestDateTime = deleteHeaders.timeStamps;
+            bodyRed.keyStatus = body.key.keyStatus;
+            //bodyRed.documentType = osEntity.custInfoOS.custIdent.custIdentType;
+            bodyRed.documentType = body.custIdent.custIdentType;
+            //bodyRed.documentNumber = osEntity.custInfoOS.custIdent.custIdentId;
+            bodyRed.documentNumber = body.custIdent.custIdentId;
+            if (!string.IsNullOrEmpty(body.merchantId))
+            {
+                bodyRed.merchantId = body.merchantId;
+            }
 
-          return bodyRed;
+            bodyRed.keyObservation = string.IsNullOrEmpty(body.keyObservation) ?  null : body.keyObservation;
+
+            return bodyRed;
 
 
         }
@@ -78,10 +82,10 @@ namespace SPI_Cancellation_Service.Utils.mapper
         public void addOauthHeaders(HttpClient request)
         {
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.CONTENT_TYPE.getKeyHeader(), ConstantsEnums.APPLICATION_URL_ENCODE.getValue());
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_ID.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnums.IBM_CLIENT_ID.getValue()));
+            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_SECRET.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnums.IBM_CLIENT_SECRET.getValue()));
             request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_ID.getKeyHeader(), ConstantsEnums.IBM_CLIENT_ID.getValue());
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_ID.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_CLIENT_ID));
-            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_SECRET.getKeyHeader(), ConstantsEnums.IBM_CLIENTSECRET.getValue());
-            //request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENTSECRET.getKeyHeader(), Environment.GetEnvironmentVariable(ConstantsEnum.IBM_Client_Secret));
+            request.DefaultRequestHeaders.TryAddWithoutValidation(RedHeadersEnums.X_IBM_CLIENT_SECRET.getKeyHeader(), ConstantsEnums.IBM_CLIENT_SECRET.getValue());
         }
 
         public RqOAuth mapBodyOauth()

@@ -8,7 +8,8 @@ namespace SPI_Cancellation_Service.Domain.constants
 {
     public enum ResponseEnums
     {
-        ENRROLLMENT_RESPONSE_SUCCESS,
+        CANCELLATION_RESPONSE_SUCCESS,
+        CANCELLATION_RESPONSE_ERROR,
     }
     public static class ResponseEnum
     {
@@ -17,7 +18,8 @@ namespace SPI_Cancellation_Service.Domain.constants
         {
             return responseEnums switch
             {
-                 ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS => "201",
+                 ResponseEnums.CANCELLATION_RESPONSE_SUCCESS => "201",
+                    ResponseEnums.CANCELLATION_RESPONSE_ERROR => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseEnums))
             };
         }
@@ -26,7 +28,8 @@ namespace SPI_Cancellation_Service.Domain.constants
         {
             return responseEnums switch
             {
-                ResponseEnums.ENRROLLMENT_RESPONSE_SUCCESS => "La llave se creo exitosamente",
+                ResponseEnums.CANCELLATION_RESPONSE_SUCCESS => "La llave se cancelo exitosamente",
+                ResponseEnums.CANCELLATION_RESPONSE_ERROR => "Error al cancelar la llave",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseEnums))
             };
         }

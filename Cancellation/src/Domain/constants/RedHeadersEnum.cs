@@ -39,6 +39,8 @@ namespace SPI_Cancellation_Service.Domain.constants
                 RedHeadersEnums.X_FORWARDED_FOR => "X-Forwarded-For",
                 RedHeadersEnums.X_REQUEST_ID => "X-Request-ID",
                 RedHeadersEnums.ORIGIN => "Origin",
+                RedHeadersEnums.RQ_ID => "RqId",
+                RedHeadersEnums.AUTHORIZATION => "Authorization",
                 RedHeadersEnums.X_IBM_CLIENT_ID => "X-IBM-Client-Id",
                 RedHeadersEnums.X_IBM_CLIENT_SECRET => "X-IBM-Client-Secret",
                 _=> throw new ArgumentOutOfRangeException(nameof(redHeadersEnums))

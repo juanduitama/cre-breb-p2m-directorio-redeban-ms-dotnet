@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace SPI_Cancellation_Service.Domain.models.redeban
 {
@@ -40,7 +41,13 @@ namespace SPI_Cancellation_Service.Domain.models.redeban
         /// <summary>
         /// Número de documento
         /// </summary>
+        /// 
         [JsonPropertyName("MerchantId")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? merchantId { get; set; }
+
+
+        [JsonPropertyName("keyObservation")]
+        public string? keyObservation { get; set; }
     }
 }

@@ -9,6 +9,9 @@ namespace SPI_Cancellation_Service.Domain.models.delete
         [JsonPropertyName("key")]
         public Key? key { get; set; }
 
+        [JsonPropertyName("custIdent")]
+        public CustIdent? custIdent { get; set; }
+
         [ValidateNever]
         [JsonPropertyName("vaultInsc")]
         public VaultInsc? vaultInsc { get; set; }
@@ -16,5 +19,13 @@ namespace SPI_Cancellation_Service.Domain.models.delete
 
         [JsonPropertyName("effDtKey")]
         public EffDtKey? effDtKey { get; set; }
+
+
+        [JsonPropertyName("merchantId")]
+        public string? merchantId { get; set; }
+        
+        [JsonPropertyName("keyObservation")]
+        public string? keyObservation { get; set; }
+
     }
 }

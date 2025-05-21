@@ -21,10 +21,23 @@
         public const string KEY_BLOCK_BY_ENTITY_STATUS = "SUSB";
         public const string KEY_CANCEL_STATUS = "CANC";
 
+        public const string CUST_IDENT_TYPE_CC = "CC";
+        public const string CUST_IDENT_TYPE_CE = "CE";
+        public const string CUST_IDENT_TYPE_NUIP = "NUIP";
+        public const string CUST_IDENT_TYPE_PPT = "PPT";
+        public const string CUST_IDENT_TYPE_NIT = "NIT";
+        public const string CUST_IDENT_TYPE_PEP = "PEP";
+        public const string CUST_IDENT_TYPE_PAS = "PAS";
+        public const string CUST_IDENT_TYPE_TDI = "TDI";
+
+        public const string IDENT_ID_SIZE = "18";
+        public const string IDENT_ID = "^[a-zA-Z0-9]{10,18}$";
+
         public const string VAULT_NAME_RBM = "REDEBAN";
 
         public const string FLOW_SERVICES_CREATE = "cancelacionLinea";
 
         public const string DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff'Z'";
+        public const string DATE_HEADER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.fff";
     }
 }

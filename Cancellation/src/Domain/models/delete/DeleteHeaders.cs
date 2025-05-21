@@ -5,12 +5,9 @@ namespace SPI_Cancellation_Service.Domain.models.delete
 {
     public class DeleteHeaders
     {  
-        [JsonPropertyName("apiKey")]
-        public string? apikey { get; set; }
-
         
-        [JsonPropertyName("Authentication")]
-        public string? authentication { get; set; }
+        [JsonPropertyName("ipOrigin")]
+        public string? ipOrigin { get; set; }
 
         
         [JsonPropertyName("uuId")]

@@ -51,9 +51,9 @@ namespace SPI_Cancellation_Service.Utils.util
         /// <exception cref="InvalidOperationException"></exception>
         private X509Certificate2 LoadTrustedServerCertificate()
         {
-            //var serverCertPath = Environment.GetEnvironmentVariable(ConstantsEnum.CERTIFICATE);
+            //var serverCertPath = Environment.GetEnvironmentVariable(ConstantsEnums.CERTIFICATE.getValue());
             var serverCertPath = _serverCertPath;
-            
+
 
             if (string.IsNullOrEmpty(serverCertPath))
             {

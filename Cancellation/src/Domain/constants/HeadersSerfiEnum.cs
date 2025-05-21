@@ -2,15 +2,11 @@
 {
     public class HeadersSerfiEnum
     {
-        /// <summary>
-        /// Indica el tamaño anticipado del cuerpo de carga útil.
-        /// </summary>
-        public const string API_KEY = "apiKey";
 
         /// <summary>
         /// El token de autorizacion para el consumo del servicio.
         /// </summary>
-        public const string AUTHENTICATION = "Authentication";
+        public const string IP_ORIGIN = "ipOrigin";
 
         /// <summary>
         /// Indica el tipo de medio original del recurso.

@@ -20,15 +20,16 @@ namespace SPI_Cancellation_Service.Utils.util
         /// <returns>URI completa para la operación</returns>
         public string BuildUri(string keyType, string keyValue)
         {
-            string newUri = getValuePathParameters(ConstantsEnums.DELETE_URI.getValue(), PathParametersEnum.KEY_TYPE, keyType); 
-            newUri = getValuePathParameters(newUri, PathParametersEnum.KEY_VALUE, keyValue);
+            //string newUri = getValuePathParameters(Environment.GetEnvironmentVariable(ConstantsEnums.BASE_URI_CANCELLATION.getValue()), PathParametersEnums.KEY_TYPE, keyType);
+            string newUri = getValuePathParameters(ConstantsEnums.BASE_URI_CANCELLATION.getValue(), PathParametersEnums.KEY_TYPE, keyType);
+            newUri = getValuePathParameters(newUri, PathParametersEnums.KEY_VALUE, keyValue);
 
-            return ConstantsEnums.BASE_URI.getValue() + newUri;                
+            return newUri;                
             
         }
 
 
-        private string getValuePathParameters(string uri, PathParametersEnum pathParameter, string valueParameter)
+        private string getValuePathParameters(string uri, PathParametersEnums pathParameter, string valueParameter)
         {
             if (uri.Contains(pathParameter.getValuePathParameters()))
             {
