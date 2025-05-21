@@ -12,7 +12,6 @@ using domain.models.oAuth;
 using SPI_Update_Service.Proxy.interfaces;
 using SPI_Update_Service.Utils.util;
 using SPI_Update_Service.Utils.mapper;
-using SPI_Update_Service.Infrastructure.repositories;
 using SPI_Update_Service.ApplicationCore.services;
 
 namespace SPI_Update_Service.Proxy.update
@@ -49,15 +48,15 @@ namespace SPI_Update_Service.Proxy.update
             try
             {
 
-                MsgInformationResponse responseRedeban = new MsgInformationResponse();
+                MsgInformationResponse responseRedebanAccount = new MsgInformationResponse();
 
                 _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate();
 
                 _httpClient.DefaultRequestHeaders.Clear();
 
-                RsOAuth responseOauth = await _oauthService.getToken(Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_OAUTH.getValue()), _httpClient);
+                RsOAuth responseOauthAccount = await _oauthService.getToken(Environment.GetEnvironmentVariable(ConstantsEnum.BASE_URI_OAUTH.getValue()), _httpClient);
 
-                Console.WriteLine("Token obtenido Oauth: " + responseOauth.accessToken);
+                Console.WriteLine("Token para cuenta obtenido Oauth: " + responseOauthAccount.accessToken);
 
                 Console.WriteLine($"[INFO] Iniciando solicitud PATCH Update account a: {url}");
                 _httpClient.DefaultRequestHeaders.Clear();
