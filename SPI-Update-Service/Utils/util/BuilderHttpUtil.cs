@@ -17,7 +17,7 @@ namespace SPI_Update_Service.Utils.util
         public BuilderHttpUtil()
         {
         }
-        public HttpClient BuildClientWithClientCertificate(byte[] file)
+        public HttpClient BuildClientWithClientCertificate()
         {
             Console.WriteLine("[INFO] Configurando HttpClient con certificado de cliente (.pfx)");
 
@@ -26,7 +26,7 @@ namespace SPI_Update_Service.Utils.util
                 SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13
             };
 
-            var clientCertificate = new X509Certificate2(file, Environment.GetEnvironmentVariable(ConstantsEnum.PASSWORD_CERTIFICATE.getValue()));
+            var clientCertificate = new X509Certificate2(Environment.GetEnvironmentVariable(ConstantsEnum.CERT_ROUTE.getValue()), Environment.GetEnvironmentVariable(ConstantsEnum.PSW_CERTIFICATE.getValue()));
             handler.ClientCertificates.Add(clientCertificate);
 
             return new HttpClient(handler);

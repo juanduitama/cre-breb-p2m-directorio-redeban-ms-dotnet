@@ -12,6 +12,8 @@ using domain.models.oAuth;
 using SPI_Update_Service.Proxy.interfaces;
 using SPI_Update_Service.Utils.util;
 using SPI_Update_Service.Utils.mapper;
+using SPI_Update_Service.Infrastructure.repositories;
+using SPI_Update_Service.ApplicationCore.services;
 
 namespace SPI_Update_Service.Proxy.update
 {
@@ -110,7 +112,7 @@ namespace SPI_Update_Service.Proxy.update
             {
                 MsgInformationResponse responseRedeban = new MsgInformationResponse();
 
-                _httpClient = _BuilderHttpUtil.BuildClientWithServerCertificate();
+                _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate();
 
                 _httpClient.DefaultRequestHeaders.Clear();
                 RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);

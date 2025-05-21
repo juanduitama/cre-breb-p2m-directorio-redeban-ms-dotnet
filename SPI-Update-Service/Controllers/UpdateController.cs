@@ -31,15 +31,11 @@ namespace SPI_Update_Service.Controllers
         private readonly HeaderSerfiMapper _headersMapper = new HeaderSerfiMapper();
         private readonly RedRqMapper _redRqMapper = new RedRqMapper();
         private readonly ResponseSerfiMapper _rsSerfiMapper;
-        private readonly S3Repository _s3Repository;
-        private readonly IS3Service _s3Service;
 
         public UpdateController()
         {
             _uriUtil = new UriUtil();
             _rsSerfiMapper = new ResponseSerfiMapper();
-            _s3Repository = new S3Repository();
-            _s3Service = new S3Service(_s3Repository);
         }
 
         [HttpPatch("account")]
@@ -96,7 +92,7 @@ namespace SPI_Update_Service.Controllers
                 UpdateAcctRq updateBody = _redRqMapper.MapBodyAccountFromRequest(request.reqBPatchAccount, request.updateHeaders);
 
                 // Llamar al servicio
-                responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody, _s3Service);
+                responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody);
 
                 Console.WriteLine("Respuesta de redeban: " + UtilCommons.Object2String(responseRedeban));
                 if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
@@ -175,7 +171,7 @@ namespace SPI_Update_Service.Controllers
                 UpdateKeyPersonRq updateBody = _redRqMapper.MapBodyKeyFromRequest(request);
 
                 // Llamar al servicio
-                responseRedeban = await _updateService.UpdateKeyAsync(apiUri, headersRq, updateBody, _s3Service);
+                responseRedeban = await _updateService.UpdateKeyAsync(apiUri, headersRq, updateBody);
 
                 if(responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
                 {

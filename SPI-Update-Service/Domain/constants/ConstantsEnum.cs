@@ -22,10 +22,8 @@ namespace domain.constants
         RBM_FROM,
         IBM_CLIENT_ID,
         IBM_ClientSecret,
-        BUCKET_NAME,
-        PATHS3,
-        PASSWORD_CERTIFICATE,
-        CERTIFICATE,
+        CERT_ROUTE,
+        PSW_CERTIFICATE,
 
         BEARER,
 
@@ -63,10 +61,8 @@ namespace domain.constants
                     ConstantsEnum.IBM_CLIENT_ID => "IBM_CLIENT_ID",
                     ConstantsEnum.IBM_ClientSecret => "IBM_ClientSecret",
 
-                    ConstantsEnum.CERTIFICATE => "CERTIFICATE",
-                    ConstantsEnum.BUCKET_NAME => "BUCKET_NAME",
-                    ConstantsEnum.PATHS3 => "PATHS3",
-                    ConstantsEnum.PASSWORD_CERTIFICATE => "PASSWORD_CERTIFICATE",
+                    ConstantsEnum.CERT_ROUTE => "CERT_ROUTE",
+                    ConstantsEnum.PSW_CERTIFICATE => "PSW_CERTIFICATE",
 
                     ConstantsEnum.BEARER => "Bearer",
                     ConstantsEnum.SCOPES => "HUB",
