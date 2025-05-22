@@ -42,14 +42,14 @@ namespace SPI_Update_Service.Proxy.update
 
         }
 
-        public async Task<MsgInformationResponse> UpdateAccountAsync(string url, HeadersRq headers, UpdateAcctRq requestBody)
+        public async Task<MsgInformationResponse> UpdateAccountAsync(string url, HeadersRq headers, UpdateAcctRq requestBody, IS3Service s3Service)
         {
             try
             {
 
                 MsgInformationResponse responseRedeban = new MsgInformationResponse();
 
-                _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate();
+                _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate(await s3Service.getCertificate());
 
                 _httpClient.DefaultRequestHeaders.Clear();
 
@@ -104,13 +104,13 @@ namespace SPI_Update_Service.Proxy.update
             }
         }
 
-        public async Task<MsgInformationResponse> UpdateKeyAsync(string url, HeadersRq headers, UpdateKeyPersonRq requestBody)
+        public async Task<MsgInformationResponse> UpdateKeyAsync(string url, HeadersRq headers, UpdateKeyPersonRq requestBody, IS3Service s3Service)
         {
             try
             {
                 MsgInformationResponse responseRedeban = new MsgInformationResponse();
 
-                _httpClient = _BuilderHttpUtil.BuildClientWithServerCertificate();
+                _httpClient = _BuilderHttpUtil.BuildClientWithClientCertificate(await s3Service.getCertificate());
 
                 _httpClient.DefaultRequestHeaders.Clear();
                 RsOAuth responseOauth = await _oauthService.getToken(ConstantsEnum.BASE_URI_OAUTH.getValue(), _httpClient);

@@ -19,17 +19,28 @@ namespace SPI_Update_Service.Utils.util
         }
         public HttpClient BuildClientWithClientCertificate(byte[] file)
         {
-            Console.WriteLine("[INFO] Configurando HttpClient con certificado de cliente (.pfx)");
-
-            var handler = new HttpClientHandler
+            try
             {
-                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13
-            };
+                Console.WriteLine("[INFO] Configurando HttpClient con certificado de cliente (.pfx)");
+                string psw = Environment.GetEnvironmentVariable(ConstantsEnum.PASSWORD_CERTIFICATE.getValue());
 
-            var clientCertificate = new X509Certificate2(file, Environment.GetEnvironmentVariable(ConstantsEnum.PASSWORD_CERTIFICATE.getValue()));
-            handler.ClientCertificates.Add(clientCertificate);
+                Console.WriteLine("psw: " + psw);
 
-            return new HttpClient(handler);
+                var handler = new HttpClientHandler
+                {
+                    SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13
+                };
+
+                var clientCertificate = new X509Certificate2(file, psw);
+                handler.ClientCertificates.Add(clientCertificate);
+
+                return new HttpClient(handler);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al consumir el certificado: " +  ex.Message);
+                throw new SerfiException(ResponseServiceEnum.ERROR_CERTIFICATE.getErrorCode(), ResponseServiceEnum.ERROR_CERTIFICATE.getMessage(), ResponseServiceEnum.ERROR_CERTIFICATE.getHttpCode());
+            }
         }
     }
 }

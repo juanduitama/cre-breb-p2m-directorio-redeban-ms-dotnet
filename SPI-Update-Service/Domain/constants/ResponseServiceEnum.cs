@@ -46,6 +46,7 @@ namespace domain.constants
         INVALID_LAST_NAME,
         INVALID_SECOND_LAST_NAME,
         INVALID_CEL_NUMBER,
+        ERROR_CERTIFICATE,
 
         DYNAMO_ERROR,
         DYNAMO_CLIENT_ERROR,
@@ -97,6 +98,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_CEL_NUMBER => "400",
                 ResponseServiceEnum.DYNAMO_ERROR => "500",
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "500",
+                ResponseServiceEnum.ERROR_CERTIFICATE => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -141,6 +143,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_CEL_NUMBER => "[custContact.custMobileNumber] el número´telefónico no coincide con los parámetros establecidos",
                 ResponseServiceEnum.DYNAMO_ERROR => "Hubo un problema al realizar la operación en Dynamo DB",
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "No se pudo realizar la conexión al cliente Dynamo DB",
+                ResponseServiceEnum.ERROR_CERTIFICATE => "Error al consumir el certificado",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -185,6 +188,7 @@ namespace domain.constants
                 ResponseServiceEnum.INVALID_CEL_NUMBER => 400,
                 ResponseServiceEnum.DYNAMO_ERROR => 500,
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => 500,
+                ResponseServiceEnum.ERROR_CERTIFICATE => 500,
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
