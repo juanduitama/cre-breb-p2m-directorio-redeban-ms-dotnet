@@ -21,12 +21,18 @@ namespace SPI_Update_Service.Utils.util
         {
             Console.WriteLine("[INFO] Configurando HttpClient con certificado de cliente (.pfx)");
 
+            string file = Environment.GetEnvironmentVariable(ConstantsEnum.CERT_ROUTE.getValue());
+            string psw= Environment.GetEnvironmentVariable(ConstantsEnum.PSW_CERTIFICATE.getValue());
+
+            Console.WriteLine("file: " + file);
+            Console.WriteLine("psw: " + psw);
+
             var handler = new HttpClientHandler
             {
                 SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13
             };
 
-            var clientCertificate = new X509Certificate2(Environment.GetEnvironmentVariable(ConstantsEnum.CERT_ROUTE.getValue()), Environment.GetEnvironmentVariable(ConstantsEnum.PSW_CERTIFICATE.getValue()));
+            var clientCertificate = new X509Certificate2(file, psw);
             handler.ClientCertificates.Add(clientCertificate);
 
             return new HttpClient(handler);

@@ -18,6 +18,8 @@ COPY ["SPI-Update-Service.csproj", "."]
 # Restore packages first (this helps with Docker layer caching)
 RUN dotnet restore "./SPI-Update-Service.csproj"
 
+COPY Utils/certificate/*.pfx ./Utils/certificate/
+
 # Copy the rest of the source code
 COPY . .
 WORKDIR "/src/."
@@ -34,4 +36,7 @@ RUN dotnet publish "./SPI-Update-Service.csproj" -c $BUILD_CONFIGURATION -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+COPY --from=build /src/Utils/certificate/*.pfx ./Utils/certificate/
+
 ENTRYPOINT ["dotnet", "SPI-Update-Service.dll"]

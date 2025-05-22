@@ -23,6 +23,7 @@ namespace domain.constants
         IBM_CLIENT_ID,
         IBM_ClientSecret,
         CERT_ROUTE,
+        CERT_NAME,
         PSW_CERTIFICATE,
 
         BEARER,
@@ -62,6 +63,7 @@ namespace domain.constants
                     ConstantsEnum.IBM_ClientSecret => "IBM_ClientSecret",
 
                     ConstantsEnum.CERT_ROUTE => "CERT_ROUTE",
+                    ConstantsEnum.CERT_NAME => "CERT_NAME",
                     ConstantsEnum.PSW_CERTIFICATE => "PSW_CERTIFICATE",
 
                     ConstantsEnum.BEARER => "Bearer",
