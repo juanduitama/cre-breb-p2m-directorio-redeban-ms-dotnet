@@ -16,6 +16,7 @@ namespace SPI_Update_Service.ApplicationCore.services
         {
             try
             {
+                Console.WriteLine("Inicia busqueda en s3. ");
                 var request = new GetObjectRequest
                 {
                     BucketName = Environment.GetEnvironmentVariable(ConstantsEnum.BUCKET_NAME.getValue()),
@@ -28,6 +29,8 @@ namespace SPI_Update_Service.ApplicationCore.services
                     await response.ResponseStream.CopyToAsync(memoryStream);
                     memoryStream.Position = 0;
 
+
+                    Console.WriteLine("Finliaza busqueda en s3. ");
                     return memoryStream.ToArray();
                 }
 

@@ -27,8 +27,6 @@ namespace SPI_Update_Service.Proxy.update
 
         public async Task<RsOAuth> getToken(string url, HttpClient _httpClient)
         {
-
-
             Console.WriteLine($"Comienza obtención de token \n url: {url}");
 
             _httpClient.DefaultRequestHeaders.Clear();
@@ -52,7 +50,7 @@ namespace SPI_Update_Service.Proxy.update
 
             string responseOAuthS = UtilCommons.Object2String(responseRes);
 
-            Console.WriteLine($"[RES] Respuesta:" + responseOAuthS);
+            Console.WriteLine($"[RES] Respuesta de getToken():" + responseOAuthS);
 
             return responseOAuth;
         }

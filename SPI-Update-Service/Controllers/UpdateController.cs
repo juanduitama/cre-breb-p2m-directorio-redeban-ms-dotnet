@@ -63,12 +63,9 @@ namespace SPI_Update_Service.Controllers
 
             UpdateAccountRq request = new UpdateAccountRq();
             request.updateHeaders = _headersMapper.mapHeaders(ipOrigin, uuidHeader, timestampsHeader, systemIdHeader);
-            string headers = UtilCommons.Object2String(request.updateHeaders);
-            Console.WriteLine("headers: " + headers);
-
             request.reqBPatchAccount = body;
-            string body1 = UtilCommons.Object2String(request.reqBPatchAccount);
-            Console.WriteLine("body: " + body1);
+
+            Console.WriteLine("request: " + UtilCommons.Object2String(request));
             MsgInformationResponse responseRedeban = null;
 
             try
@@ -88,15 +85,13 @@ namespace SPI_Update_Service.Controllers
 
                 string apiUri = _uriUtil.BuildUriAccount(request.reqBPatchAccount.key.keyId, request.reqBPatchAccount.key.keyType);
 
-                //string apiUri = "https://b893c53b-3fb1-43b9-b7c2-4a85801e0e88.mock.pstmn.io/AccountUpdate";
-
                 // Obtener headers de la solicitud
                 HeadersRq headersRq = _redRqMapper.MapHeadersFromRequest(request.updateHeaders);
 
                 UpdateAcctRq updateBody = _redRqMapper.MapBodyAccountFromRequest(request.reqBPatchAccount, request.updateHeaders);
 
                 // Llamar al servicio
-                responseRedeban = await _updateService.UpdateAccountAsync(apiUri, headersRq, updateBody, _s3Service);
+                responseRedeban = await _updateService.UpdateAsync(apiUri, headersRq, null, updateBody, _s3Service);
 
                 Console.WriteLine("Respuesta de redeban: " + UtilCommons.Object2String(responseRedeban));
                 if (responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
@@ -109,8 +104,8 @@ namespace SPI_Update_Service.Controllers
                     throw new SerfiException(ResponseServiceEnum.SERVICE_ACCOUNT_ERROR.getErrorCode(), ResponseServiceEnum.SERVICE_ACCOUNT_ERROR.getMessage(), ResponseServiceEnum.SERVICE_ACCOUNT_ERROR.getHttpCode());
                 }
 
-                //Console.WriteLine("Iniciando proceso de guardado en open search.");
-                // Falta mapeo
+                //Console.WriteLine("Iniciando proceso de guardado en dynamo.");
+
                 //OSDefinitive entityToSave = _rqMapperOs.mapUpdateAccountOSDefinitiveFromRequest(request, opSearchOldEntity);
 
                 //await _openSearchService.SaveKey(entityToSave);
@@ -137,7 +132,7 @@ namespace SPI_Update_Service.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la inscripción: {ex.Message}");
-                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadResponseGenericAccount(request, responseRedeban, ex);
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadResponseGenericAccount(request, ex);
                 return BadRequest(responseService);
             }
         }
@@ -152,12 +147,9 @@ namespace SPI_Update_Service.Controllers
 
             UpdateKeyRq request = new UpdateKeyRq();
             request.updateHeaders = _headersMapper.mapHeaders(ipOrigin, uuidHeader, timestampsHeader, systemIdHeader);
-            string headers = UtilCommons.Object2String(request.updateHeaders);
-            Console.WriteLine("headers: " + headers);
-
             request.reqBPatchKey = body;
-            string body1 = UtilCommons.Object2String(request.reqBPatchKey);
-            Console.WriteLine("body: " + body1);
+
+            Console.WriteLine("request: " + UtilCommons.Object2String(request));
 
             MsgInformationResponse responseRedeban = null; 
 
@@ -175,7 +167,7 @@ namespace SPI_Update_Service.Controllers
                 UpdateKeyPersonRq updateBody = _redRqMapper.MapBodyKeyFromRequest(request);
 
                 // Llamar al servicio
-                responseRedeban = await _updateService.UpdateKeyAsync(apiUri, headersRq, updateBody, _s3Service);
+                responseRedeban = await _updateService.UpdateAsync(apiUri, headersRq, updateBody, null,  _s3Service);
 
                 if(responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_SUCCESS_STATUS_CODE.getValue() || responseRedeban.messageInformation.msgCode == StatusCodeEnum.RED_PERSON_CREATED_STATUS_CODE.getValue())
                 {
@@ -202,7 +194,7 @@ namespace SPI_Update_Service.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine($"Error en la inscripción: {ex.Message}");
-                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadMessageGenericResponseKey(request, responseRedeban, ex);
+                MsgInformationResponseSerfi responseService = _rsSerfiMapper.mapBadMessageGenericResponseKey(request, ex);
                 return BadRequest(responseService);
             }
         }

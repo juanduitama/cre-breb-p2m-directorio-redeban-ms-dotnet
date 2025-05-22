@@ -63,7 +63,6 @@ namespace domain.constants
                     ConstantsEnum.IBM_CLIENT_ID => "IBM_CLIENT_ID",
                     ConstantsEnum.IBM_ClientSecret => "IBM_ClientSecret",
 
-                    ConstantsEnum.CERTIFICATE => "CERTIFICATE",
                     ConstantsEnum.BUCKET_NAME => "BUCKET_NAME",
                     ConstantsEnum.PATHS3 => "PATHS3",
                     ConstantsEnum.PASSWORD_CERTIFICATE => "PASSWORD_CERTIFICATE",

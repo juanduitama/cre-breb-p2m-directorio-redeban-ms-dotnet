@@ -13,6 +13,7 @@ namespace domain.constants
         UPDATE_RESPONSE_DESC_SUCCESS_PRODUCT,
         UPDATE_RESPONSE_DESC_SUCCESS_KEY,
         UPDATE_BAD_RESPONSE_CODE,
+        UPDATE_BAD_RESPONSE_MESSAGE_GENERIC,
     }
     public static class ResponseEnunExtensions
     {
@@ -25,6 +26,7 @@ namespace domain.constants
                 ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_PRODUCT => "El producto se modificó exitosamente",
                 ResponseEnun.UPDATE_RESPONSE_DESC_SUCCESS_KEY => "La llave se modificó exitosamente",
                 ResponseEnun.UPDATE_BAD_RESPONSE_CODE => "500",
+                ResponseEnun.UPDATE_BAD_RESPONSE_MESSAGE_GENERIC => "Error desconocido del micro servicio",
 
                 _ => throw new ArgumentOutOfRangeException(nameof(responseEnum))
             };

@@ -112,7 +112,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadResponseGenericAccount(UpdateAccountRq updateAccount, MsgInformationResponse messageInformation, Exception ex)
+        public MsgInformationResponseSerfi mapBadResponseGenericAccount(UpdateAccountRq updateAccount, Exception ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -122,16 +122,12 @@ namespace SPI_Update_Service.Utils.mapper
             msgInformationResponseSerfi.meta = meta;
 
             msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
-            msgInformationResponseSerfi.statusDesc = ex.Message;
-
+            msgInformationResponseSerfi.statusDesc = ResponseEnun.UPDATE_BAD_RESPONSE_MESSAGE_GENERIC.getValue();
 
             AditionalInfo aditionalInfoItem = new AditionalInfo();
 
-            if (messageInformation != null)
-            {
-                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
-            }
+            aditionalInfoItem.codigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
+            aditionalInfoItem.detalle = ex.Message;
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
             aditionalInfoList.Add(aditionalInfoItem);
@@ -182,7 +178,7 @@ namespace SPI_Update_Service.Utils.mapper
             return msgInformationResponseSerfi;
         }
 
-        public MsgInformationResponseSerfi mapBadMessageGenericResponseKey(UpdateKeyRq updateKey, MsgInformationResponse messageInformation, Exception ex)
+        public MsgInformationResponseSerfi mapBadMessageGenericResponseKey(UpdateKeyRq updateKey, Exception ex)
         {
             MsgInformationResponseSerfi msgInformationResponseSerfi = new MsgInformationResponseSerfi();
             Meta meta = new Meta();
@@ -192,16 +188,13 @@ namespace SPI_Update_Service.Utils.mapper
             msgInformationResponseSerfi.meta = meta;
 
             msgInformationResponseSerfi.statusCodigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
-            msgInformationResponseSerfi.statusDesc = ex.Message;
+            msgInformationResponseSerfi.statusDesc = ResponseEnun.UPDATE_BAD_RESPONSE_MESSAGE_GENERIC.getValue();
 
 
             AditionalInfo aditionalInfoItem = new AditionalInfo();
 
-            if (messageInformation != null)
-            {
-                aditionalInfoItem.codigo = messageInformation.messageInformation.msgCode;
-                aditionalInfoItem.detalle = messageInformation.messageInformation.msgDescription;
-            }
+            aditionalInfoItem.codigo = ResponseEnun.UPDATE_BAD_RESPONSE_CODE.getValue();
+            aditionalInfoItem.detalle = ex.Message;
 
             List<AditionalInfo> aditionalInfoList = new List<AditionalInfo>();
             aditionalInfoList.Add(aditionalInfoItem);
