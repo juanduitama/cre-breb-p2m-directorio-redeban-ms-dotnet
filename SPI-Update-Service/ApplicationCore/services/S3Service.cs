@@ -35,7 +35,7 @@ namespace SPI_Update_Service.ApplicationCore.services
             catch (AmazonS3Exception ex)
             {
                 Console.WriteLine($"[ERROR] Error S3: {ex.Message}");
-                throw;
+                throw new SerfiException(ResponseServiceEnum.ERROR_S3.getErrorCode(), ResponseServiceEnum.ERROR_S3.getMessage(), ResponseServiceEnum.ERROR_S3.getHttpCode()); ;
             }
             catch (Exception ex)
             {

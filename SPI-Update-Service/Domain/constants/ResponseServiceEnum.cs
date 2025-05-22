@@ -47,6 +47,7 @@ namespace domain.constants
         INVALID_SECOND_LAST_NAME,
         INVALID_CEL_NUMBER,
         ERROR_CERTIFICATE,
+        ERROR_S3,
 
         DYNAMO_ERROR,
         DYNAMO_CLIENT_ERROR,
@@ -99,6 +100,7 @@ namespace domain.constants
                 ResponseServiceEnum.DYNAMO_ERROR => "500",
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "500",
                 ResponseServiceEnum.ERROR_CERTIFICATE => "500",
+                ResponseServiceEnum.ERROR_S3 => "500",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -144,6 +146,7 @@ namespace domain.constants
                 ResponseServiceEnum.DYNAMO_ERROR => "Hubo un problema al realizar la operación en Dynamo DB",
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => "No se pudo realizar la conexión al cliente Dynamo DB",
                 ResponseServiceEnum.ERROR_CERTIFICATE => "Error al consumir el certificado",
+                ResponseServiceEnum.ERROR_S3 => "Error al realizar conexión en S3",
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
@@ -189,6 +192,7 @@ namespace domain.constants
                 ResponseServiceEnum.DYNAMO_ERROR => 500,
                 ResponseServiceEnum.DYNAMO_CLIENT_ERROR => 500,
                 ResponseServiceEnum.ERROR_CERTIFICATE => 500,
+                ResponseServiceEnum.ERROR_S3 => 500,
                 _ => throw new ArgumentOutOfRangeException(nameof(responseService))
             };
         }
